@@ -25,4 +25,10 @@
     <string name="text_reviews_menu_2">4.8 reviews</string>
     <string name="text_reviews_menu_3">4.5 reviews</string>
     <string name="text_reviews_menu_4">4.9 reviews</string>
+    <string name="text_discount_menu_5">Fruits Salad</string>
+    <string name="text_discount_menu_6">Noodles Chicken</string>
+    <string name="text_distance_menu_5">750 m</string>
+    <string name="text_distance_menu_6">2.0 km</string>
+    <string name="text_reviews_menu_5">4.5 reviews</string>
+    <string name="text_reviews_menu_6">4.5 reviews</string>
 </resources>
