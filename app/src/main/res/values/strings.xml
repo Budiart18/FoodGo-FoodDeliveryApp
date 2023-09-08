@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">FoodGoApps</string>
+
+    <string name="text_current_location">Current Location :</string>
+    <string name="text_user_current_location">Jl. Soekarno Hatta 15A...</string>
+    <string name="text_banner_desciption">Claim Your Daily Discount 30% Daily Now!</string>
+    <string name="text_button_banner">Order Now!</string>
+    <string name="text_top_categories_title">Top Categories</string>
+    <string name="text_see_all_categories"><![CDATA[See All >>]]></string>
+    <string name="text_top_cat_1">Chicken</string>
+    <string name="text_top_cat_2">Burger</string>
+    <string name="text_top_cat_3">Noodles</string>
+    <string name="text_top_cat_4">Dessert</string>
+    <string name="text_top_discount_title">Top Discount</string>
+    <string name="text_see_all_discount"><![CDATA[See All >>]]></string>
+    <string name="text_discount_menu_1">Starbuck Borobudur</string>
+    <string name="text_discount_menu_2">KFC Magelang</string>
+    <string name="text_discount_menu_3">McD Borobudur</string>
+    <string name="text_discount_menu_4">J.Co</string>
+    <string name="text_distance_menu_1">1.0 km</string>
+    <string name="text_distance_menu_2">500 m</string>
+    <string name="text_distance_menu_3">1.2 km</string>
+    <string name="text_distance_menu_4">1.5 km</string>
+    <string name="text_reviews_menu_1">4.8 reviews</string>
+    <string name="text_reviews_menu_2">4.8 reviews</string>
+    <string name="text_reviews_menu_3">4.5 reviews</string>
+    <string name="text_reviews_menu_4">4.9 reviews</string>
 </resources>
