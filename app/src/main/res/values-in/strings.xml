@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FoodGoApps</string>
+    <string name="text_current_location">Lokasi Sekarang :</string>
+    <string name="text_banner_description">Klaim 30% Diskon Harian Anda</string>
+    <string name="text_button_banner">Pesan Sekarang!</string>
+    <string name="text_top_categories_title">Kategori Teratas</string>
+    <string name="text_see_all_categories">Lihat Semua >></string>
+    <string name="text_top_cat_1">Ayam</string>
+    <string name="text_top_cat_2">Burger</string>
+    <string name="text_top_cat_3">Mie</string>
+    <string name="text_top_cat_4">Makanan Penutup</string>
+    <string name="text_top_discount_title">Diskon Teratas</string>
+    <string name="text_see_all_discount">Lihat Semua >></string>
+    <string name="text_discount_menu_1">Starbucks Borobudur</string>
+    <string name="text_discount_menu_2">KFC Magelang</string>
+    <string name="text_discount_menu_3">McD Borobudur</string>
+    <string name="text_reviews_menu_1">4.8 ulasan</string>
+    <string name="text_reviews_menu_2">4.8 ulasan</string>
+    <string name="text_reviews_menu_3">4.5 ulasan</string>
+    <string name="text_reviews_menu_4">4.9 ulasan</string>
+    <string name="text_discount_menu_5">Salad Buah</string>
+    <string name="text_discount_menu_6">Mie Ayam</string>
+    <string name="text_reviews_menu_5">4.5 ulasan</string>
+    <string name="text_reviews_menu_6">4.5 ulasan</string>
+</resources>
