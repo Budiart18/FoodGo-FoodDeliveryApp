@@ -5,9 +5,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Food(
-    val foodImage : Int,
     val foodName : String,
+    val foodDescription : String,
     val foodPrice : String,
+    val foodImage : Int,
     val foodRating : String,
-    val foodRestoDistance : String
+    val foodShopDistance : String,
+    val foodShopLocation : String,
 ) : Parcelable

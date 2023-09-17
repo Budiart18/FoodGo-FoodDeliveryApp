@@ -57,7 +57,7 @@ class FoodItemListViewHolder(
         binding.sivFoodImage.setImageResource(item.foodImage)
         binding.tvFoodName.text = item.foodName
         binding.tvFoodPrice.text = item.foodPrice
-        binding.tvFoodRestoDistance.text = item.foodRestoDistance
+        binding.tvFoodShopDistance.text = item.foodShopDistance
         binding.tvFoodRating.text = item.foodRating
     }
 }
