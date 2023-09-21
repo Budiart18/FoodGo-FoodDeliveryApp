@@ -6,15 +6,13 @@
     <string name="text_banner_description">Claim Your Daily Discount 30% Daily Now!</string>
     <string name="text_button_banner">Order Now!</string>
     <string name="text_top_categories_title">Top Categories</string>
-    <string name="text_see_all_categories"><![CDATA[See All >>]]></string>
-    <string name="text_top_cat_1">Chicken</string>
-    <string name="text_top_cat_2">Burger</string>
-    <string name="text_top_cat_3">Noodles</string>
-    <string name="text_top_cat_4">Dessert</string>
     <string name="text_top_discount_title">Top Discount</string>
 
     <string name="text_food_price_format" translatable="false">Rp. %.2f</string>
     <string name="text_food_reviews_format">%.1f Reviews</string>
     <string name="text_shop_distance_format" translatable="false">%.1f km</string>
+    <string name="text_shop_location">Shop Location</string>
+    <string name="text_add_to_cart">Add To Cart</string>
+    <string name="text_food_total" translatable="false">1</string>
 
 </resources>

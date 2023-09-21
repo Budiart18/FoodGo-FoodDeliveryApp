@@ -1,4 +1,4 @@
-package com.aeryz.foodgoapps.presentation.homefragment
+package com.aeryz.foodgoapps.presentation.homefragment.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

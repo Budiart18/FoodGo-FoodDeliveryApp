@@ -5,11 +5,8 @@
     <string name="text_banner_description">Klaim 30% Diskon Harian Anda</string>
     <string name="text_button_banner">Pesan Sekarang!</string>
     <string name="text_top_categories_title">Kategori Teratas</string>
-    <string name="text_see_all_categories">Lihat Semua >></string>
-    <string name="text_top_cat_1">Ayam</string>
-    <string name="text_top_cat_2">Burger</string>
-    <string name="text_top_cat_3">Mie</string>
-    <string name="text_top_cat_4">Makanan Penutup</string>
     <string name="text_top_discount_title">Diskon Teratas</string>
     <string name="text_food_reviews_format">%.1f Ulasan</string>
+    <string name="text_shop_location">Lokasi Toko</string>
+    <string name="text_add_to_cart">Tambahkan ke Keranjang</string>
 </resources>

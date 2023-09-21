@@ -1,4 +1,4 @@
-package com.aeryz.foodgoapps.presentation.homefragment
+package com.aeryz.foodgoapps.presentation.homefragment.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.aeryz.foodgoapps.core.ViewHolderBinder

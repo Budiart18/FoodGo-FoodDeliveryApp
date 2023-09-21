@@ -17,6 +17,9 @@ import com.aeryz.foodgoapps.data.FoodsDataSourceImpl
 import com.aeryz.foodgoapps.databinding.FragmentFoodListBinding
 import com.aeryz.foodgoapps.model.Category
 import com.aeryz.foodgoapps.model.Food
+import com.aeryz.foodgoapps.presentation.homefragment.adapter.AdapterLayoutMode
+import com.aeryz.foodgoapps.presentation.homefragment.adapter.CategoryListAdapter
+import com.aeryz.foodgoapps.presentation.homefragment.adapter.FoodListAdapter
 
 class FoodListFragment : Fragment() {
 
@@ -31,7 +34,7 @@ class FoodListFragment : Fragment() {
     }
 
     private val foodAdapter: FoodListAdapter by lazy {
-        FoodListAdapter(AdapterLayoutMode.LINEAR) {food : Food ->
+        FoodListAdapter(AdapterLayoutMode.LINEAR) { food : Food ->
             navigateToDetail(food)
         }
     }
