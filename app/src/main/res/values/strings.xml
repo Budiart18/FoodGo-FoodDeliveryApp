@@ -12,25 +12,9 @@
     <string name="text_top_cat_3">Noodles</string>
     <string name="text_top_cat_4">Dessert</string>
     <string name="text_top_discount_title">Top Discount</string>
-    <string name="text_see_all_discount"><![CDATA[See All >>]]></string>
-    <string name="text_discount_menu_1">Starbucks Borobudur</string>
-    <string name="text_discount_menu_2">KFC Magelang</string>
-    <string name="text_discount_menu_3">McD Borobudur</string>
-    <string name="text_discount_menu_4" translatable="false">J.Co</string>
-    <string name="text_distance_menu_1" translatable="false">1.0 km</string>
-    <string name="text_distance_menu_2" translatable="false">500 m</string>
-    <string name="text_distance_menu_3" translatable="false">1.2 km</string>
-    <string name="text_distance_menu_4" translatable="false">1.5 km</string>
-    <string name="text_reviews_menu_1">4.8 reviews</string>
-    <string name="text_reviews_menu_2">4.8 reviews</string>
-    <string name="text_reviews_menu_3">4.5 reviews</string>
-    <string name="text_reviews_menu_4">4.9 reviews</string>
-    <string name="text_discount_menu_5">Fruits Salad</string>
-    <string name="text_discount_menu_6">Noodles Chicken</string>
-    <string name="text_distance_menu_5" translatable="false">750 m</string>
-    <string name="text_distance_menu_6" translatable="false">2.0 km</string>
-    <string name="text_reviews_menu_5">4.5 reviews</string>
-    <string name="text_reviews_menu_6">4.5 reviews</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="text_food_price_format" translatable="false">Rp. %.2f</string>
+    <string name="text_food_reviews_format">%.1f Reviews</string>
+    <string name="text_shop_distance_format" translatable="false">%.1f km</string>
+
 </resources>

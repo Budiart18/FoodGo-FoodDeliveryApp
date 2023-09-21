@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
+import com.aeryz.foodgoapps.R
+import com.aeryz.foodgoapps.data.FoodsDataSource
 import com.aeryz.foodgoapps.data.FoodsDataSourceImpl
 import com.aeryz.foodgoapps.databinding.FragmentFoodListBinding
 import com.aeryz.foodgoapps.model.Food
@@ -15,13 +17,17 @@ class FoodListFragment : Fragment() {
 
     private lateinit var binding: FragmentFoodListBinding
 
+    private val dataSource: FoodsDataSource by lazy {
+        FoodsDataSourceImpl()
+    }
+
     private val adapter: FoodListAdapter by lazy {
-        FoodListAdapter {
-            navigateToDetailFragment(it)
+        FoodListAdapter(AdapterLayoutMode.LINEAR) {food : Food ->
+            navigateToDetail(food)
         }
     }
 
-    private fun navigateToDetailFragment(food: Food? = null) {
+    private fun navigateToDetail(food: Food) {
         val action = FoodListFragmentDirections.navigateToDetailFragment(food)
         findNavController().navigate(action)
     }
@@ -37,12 +43,70 @@ class FoodListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        setupSwitch()
     }
 
     private fun setupRecyclerView() {
-        binding.rvListFoods.adapter = adapter
-        binding.rvListFoods.layoutManager = LinearLayoutManager(requireContext())
-        adapter.setData(FoodsDataSourceImpl().getFoodsData())
+        val span = if (adapter.adapterLayoutMode == AdapterLayoutMode.LINEAR) 1 else 2
+        binding.rvListFoods.apply {
+            layoutManager = GridLayoutManager(requireContext(),span)
+            adapter = this@FoodListFragment.adapter
+        }
+        adapter.submitList(dataSource.getFoodsData())
     }
+
+    /*private fun setupSwitch() {
+       binding.ibSwitchMode.setOnClickListener(){
+           if (adapter.adapterLayoutMode == AdapterLayoutMode.LINEAR) {
+               binding.ibSwitchMode.setImageDrawable(
+                   ContextCompat.getDrawable(
+                       requireContext(),
+                       R.drawable.ic_linear_mode
+                   )
+               )
+               (binding.rvListFoods.layoutManager as GridLayoutManager).spanCount = 1
+               adapter.adapterLayoutMode = AdapterLayoutMode.GRID
+               adapter.refreshList()
+           } else {
+               binding.ibSwitchMode.setImageDrawable(
+                   ContextCompat.getDrawable(
+                       requireContext(),
+                       R.drawable.ic_grid_mode
+                   )
+               )
+               (binding.rvListFoods.layoutManager as GridLayoutManager).spanCount = 2
+               adapter.adapterLayoutMode = AdapterLayoutMode.LINEAR
+               adapter.refreshList()
+           }
+       }
+        *//*binding.switchListGrid.setOnCheckedChangeListener { _, isChecked ->
+            (binding.rvListFoods.layoutManager as GridLayoutManager).spanCount = if (isChecked) 2 else 1
+            adapter.adapterLayoutMode = if (isChecked) AdapterLayoutMode.GRID else AdapterLayoutMode.LINEAR
+            adapter.refreshList()
+        }*//*
+    }*/
+
+    private fun setupSwitch() {
+        binding.ibSwitchMode.setOnClickListener {
+            toggleLayoutMode()
+        }
+    }
+
+    private fun toggleLayoutMode() {
+        when (adapter.adapterLayoutMode) {
+            AdapterLayoutMode.LINEAR -> {
+                binding.ibSwitchMode.setImageResource(R.drawable.ic_grid_mode)
+                (binding.rvListFoods.layoutManager as GridLayoutManager).spanCount = 2
+                adapter.adapterLayoutMode = AdapterLayoutMode.GRID
+            }
+            AdapterLayoutMode.GRID -> {
+                binding.ibSwitchMode.setImageResource(R.drawable.ic_linear_mode)
+                (binding.rvListFoods.layoutManager as GridLayoutManager).spanCount = 1
+                adapter.adapterLayoutMode = AdapterLayoutMode.LINEAR
+            }
+        }
+        adapter.refreshList()
+    }
+
 
 }
