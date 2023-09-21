@@ -4,24 +4,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.aeryz.foodgoapps.R
+import com.aeryz.foodgoapps.data.CategoryDataSource
+import com.aeryz.foodgoapps.data.CategoryDataSourceImpl
 import com.aeryz.foodgoapps.data.FoodsDataSource
 import com.aeryz.foodgoapps.data.FoodsDataSourceImpl
 import com.aeryz.foodgoapps.databinding.FragmentFoodListBinding
+import com.aeryz.foodgoapps.model.Category
 import com.aeryz.foodgoapps.model.Food
 
 class FoodListFragment : Fragment() {
 
     private lateinit var binding: FragmentFoodListBinding
 
-    private val dataSource: FoodsDataSource by lazy {
+    private val foodDataSource: FoodsDataSource by lazy {
         FoodsDataSourceImpl()
     }
 
-    private val adapter: FoodListAdapter by lazy {
+    private val categoryDataSource: CategoryDataSource by lazy {
+        CategoryDataSourceImpl()
+    }
+
+    private val foodAdapter: FoodListAdapter by lazy {
         FoodListAdapter(AdapterLayoutMode.LINEAR) {food : Food ->
             navigateToDetail(food)
         }
@@ -30,6 +39,17 @@ class FoodListFragment : Fragment() {
     private fun navigateToDetail(food: Food) {
         val action = FoodListFragmentDirections.navigateToDetailFragment(food)
         findNavController().navigate(action)
+    }
+
+    private val categoryAdapter: CategoryListAdapter by lazy {
+        CategoryListAdapter(categoryDataSource){
+            clickCategory(it)
+        }
+    }
+
+    private fun clickCategory(category: Category) {
+        val categoryName = category.categoryName
+        Toast.makeText(requireContext(), "You selected $categoryName", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateView(
@@ -42,49 +62,26 @@ class FoodListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView()
+        setupCategoryRecyclerview()
+        setupFoodRecyclerView()
         setupSwitch()
     }
 
-    private fun setupRecyclerView() {
-        val span = if (adapter.adapterLayoutMode == AdapterLayoutMode.LINEAR) 1 else 2
-        binding.rvListFoods.apply {
-            layoutManager = GridLayoutManager(requireContext(),span)
-            adapter = this@FoodListFragment.adapter
+    private fun setupCategoryRecyclerview(){
+        binding.rvListCategories.apply {
+            layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
+            adapter = this@FoodListFragment.categoryAdapter
         }
-        adapter.submitList(dataSource.getFoodsData())
     }
 
-    /*private fun setupSwitch() {
-       binding.ibSwitchMode.setOnClickListener(){
-           if (adapter.adapterLayoutMode == AdapterLayoutMode.LINEAR) {
-               binding.ibSwitchMode.setImageDrawable(
-                   ContextCompat.getDrawable(
-                       requireContext(),
-                       R.drawable.ic_linear_mode
-                   )
-               )
-               (binding.rvListFoods.layoutManager as GridLayoutManager).spanCount = 1
-               adapter.adapterLayoutMode = AdapterLayoutMode.GRID
-               adapter.refreshList()
-           } else {
-               binding.ibSwitchMode.setImageDrawable(
-                   ContextCompat.getDrawable(
-                       requireContext(),
-                       R.drawable.ic_grid_mode
-                   )
-               )
-               (binding.rvListFoods.layoutManager as GridLayoutManager).spanCount = 2
-               adapter.adapterLayoutMode = AdapterLayoutMode.LINEAR
-               adapter.refreshList()
-           }
-       }
-        *//*binding.switchListGrid.setOnCheckedChangeListener { _, isChecked ->
-            (binding.rvListFoods.layoutManager as GridLayoutManager).spanCount = if (isChecked) 2 else 1
-            adapter.adapterLayoutMode = if (isChecked) AdapterLayoutMode.GRID else AdapterLayoutMode.LINEAR
-            adapter.refreshList()
-        }*//*
-    }*/
+    private fun setupFoodRecyclerView() {
+        val span = if (foodAdapter.adapterLayoutMode == AdapterLayoutMode.LINEAR) 1 else 2
+        binding.rvListFoods.apply {
+            layoutManager = GridLayoutManager(requireContext(),span)
+            adapter = this@FoodListFragment.foodAdapter
+        }
+        foodAdapter.submitList(foodDataSource.getFoodsData())
+    }
 
     private fun setupSwitch() {
         binding.ibSwitchMode.setOnClickListener {
@@ -93,20 +90,18 @@ class FoodListFragment : Fragment() {
     }
 
     private fun toggleLayoutMode() {
-        when (adapter.adapterLayoutMode) {
+        when (foodAdapter.adapterLayoutMode) {
             AdapterLayoutMode.LINEAR -> {
                 binding.ibSwitchMode.setImageResource(R.drawable.ic_grid_mode)
                 (binding.rvListFoods.layoutManager as GridLayoutManager).spanCount = 2
-                adapter.adapterLayoutMode = AdapterLayoutMode.GRID
+                foodAdapter.adapterLayoutMode = AdapterLayoutMode.GRID
             }
             AdapterLayoutMode.GRID -> {
                 binding.ibSwitchMode.setImageResource(R.drawable.ic_linear_mode)
                 (binding.rvListFoods.layoutManager as GridLayoutManager).spanCount = 1
-                adapter.adapterLayoutMode = AdapterLayoutMode.LINEAR
+                foodAdapter.adapterLayoutMode = AdapterLayoutMode.LINEAR
             }
         }
-        adapter.refreshList()
+        foodAdapter.refreshList()
     }
-
-
 }

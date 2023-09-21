@@ -17,7 +17,7 @@
         tools:src="@tools:sample/avatars" />
 
     <LinearLayout
-        android:id="@+id/ll_food_desc"
+        android:id="@+id/ll_category_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -91,7 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="6dp"
         android:background="@color/app_color_primary"
-        app:layout_constraintTop_toBottomOf="@+id/ll_food_desc" />
+        app:layout_constraintTop_toBottomOf="@+id/ll_category_name" />
 
     <LinearLayout
         android:id="@+id/ll_shop_location"
