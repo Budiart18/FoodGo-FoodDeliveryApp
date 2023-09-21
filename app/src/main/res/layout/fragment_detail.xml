@@ -35,7 +35,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Fried Chicken KFC"
+                tools:text="Fried Chicken KFC"
                 android:textAlignment="textStart" />
 
             <TextView
@@ -44,7 +44,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Rp. 42000"
+                tools:text="Rp. 42000"
                 android:textAlignment="textEnd" />
 
         </LinearLayout>
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
-            android:text="Ayam goreng tepung adalah hidangan yang dibuat dari potongan daging ayam yang telah dilapisi dengan tepung" />
+            tools:text="Ayam goreng tepung adalah hidangan yang dibuat dari potongan daging ayam yang telah dilapisi dengan tepung" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,8 +67,7 @@
                 android:id="@+id/tv_food_shop_distance"
                 style="@style/TextAppearance.Material3.BodySmall"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/text_distance_menu_1" />
+                android:layout_height="match_parent" />
 
             <ImageView
                 android:layout_width="16dp"
@@ -81,7 +80,6 @@
                 style="@style/TextAppearance.Material3.BodySmall"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="@string/text_reviews_menu_1"
                 android:textAlignment="textStart" />
 
         </LinearLayout>
@@ -96,11 +94,13 @@
         app:layout_constraintTop_toBottomOf="@+id/ll_food_desc" />
 
     <LinearLayout
+        android:id="@+id/ll_shop_location"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="horizontal"
         android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/v_food_desc">
+        app:layout_constraintTop_toBottomOf="@+id/v_food_desc"
+        app:layout_constraintBottom_toTopOf="@+id/ll_notes">
 
         <ImageView
             android:id="@+id/iv_shop_location"
@@ -126,13 +126,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Jl. BSD Green Office Park Jl. BSD Grand Boulevard, Sampora, BSD, Kabupaten Tangerang, Banten 15345" />
+                tools:text="Jl. BSD Green Office Park Jl. BSD Grand Boulevard, Sampora, BSD, Kabupaten Tangerang, Banten 15345" />
 
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_notes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -202,6 +203,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/b_add_to_cart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
@@ -211,6 +213,5 @@
             android:text="Add To Cart" />
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
