@@ -5,5 +5,5 @@ FoodGo Apps is Designed for complete challenge Android Engineering Course from B
 
 ## Screenshots
 
-![App Screenshot](screenshot/ss_homepage.jpg)
+![App Screenshot](screenshot/ss_home.jpeg)
 
