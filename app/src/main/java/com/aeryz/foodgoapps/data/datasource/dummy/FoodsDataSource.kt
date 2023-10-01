@@ -13,7 +13,7 @@ class FoodsDataSourceImpl() : FoodsDataSource {
             Food(
                 foodName = "Coffee Starbucks",
                 foodDescription = "Kopi Starbucks: Kenikmatan kopi berkualitas dengan berbagai pilihan rasa dan susu.",
-                foodPrice = 30000.0,
+                foodPrice = 30000.00,
                 foodImage = R.drawable.iv_starbucks,
                 foodRating = 4.7,
                 foodShopDistance = 1.0,
@@ -23,7 +23,7 @@ class FoodsDataSourceImpl() : FoodsDataSource {
             Food(
                 foodName = "Fried Chicken KFC",
                 foodDescription = "Kopi Starbucks: Kenikmatan kopi berkualitas dengan berbagai pilihan rasa dan susu.",
-                foodPrice = 20000.0,
+                foodPrice = 20000.00,
                 foodImage = R.drawable.iv_kfc,
                 foodRating = 4.5,
                 foodShopDistance = 0.5,
@@ -33,7 +33,7 @@ class FoodsDataSourceImpl() : FoodsDataSource {
             Food(
                 foodName = "Burger McDonalds",
                 foodDescription = "Burger ikonik dengan daging panggang, sayuran segar, dan saus lezat dalam roti empuk.",
-                foodPrice = 30000.0,
+                foodPrice = 30000.00,
                 foodImage = R.drawable.iv_mc_donalds,
                 foodRating = 4.5,
                 foodShopDistance = 1.0,
@@ -43,7 +43,7 @@ class FoodsDataSourceImpl() : FoodsDataSource {
             Food(
                 foodName = "Donat J.Co",
                 foodDescription = "Donat lembut dengan berbagai pilihan toping dan gula halus yang membuatnya nikmat.",
-                foodPrice = 10000.0,
+                foodPrice = 10000.00,
                 foodImage = R.drawable.iv_j_co,
                 foodRating = 4.7,
                 foodShopDistance = 1.5,
@@ -53,7 +53,7 @@ class FoodsDataSourceImpl() : FoodsDataSource {
             Food(
                 foodName = "Fruits Salad",
                 foodDescription = "Campuran segar berbagai buah dengan rasa manis alami dan nutrisi yang sehat.",
-                foodPrice = 40000.0,
+                foodPrice = 40000.00,
                 foodImage = R.drawable.iv_fruits_salad,
                 foodRating = 4.7,
                 foodShopDistance = 0.7,
@@ -63,7 +63,7 @@ class FoodsDataSourceImpl() : FoodsDataSource {
             Food(
                 foodName = "Noodles Chicken",
                 foodDescription = "Mie lezat dengan potongan ayam, kuah khas, dan bumbu yang menggugah selera.",
-                foodPrice = 25000.0,
+                foodPrice = 25000.00,
                 foodImage = R.drawable.iv_noodles,
                 foodRating = 4.6,
                 foodShopDistance = 2.0,
