@@ -177,7 +177,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@+id/cl_top_categories_title"
-                    tools:context=".presentation.homefragment.FoodListFragment">
+                    tools:context=".presentation.home.HomeFragment">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_list_categories"
@@ -229,7 +229,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@+id/cl_top_discount_title"
-                    tools:context=".presentation.homefragment.FoodListFragment">
+                    tools:context=".presentation.home.HomeFragment">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_list_foods"

@@ -1,4 +1,4 @@
-package com.aeryz.foodgoapps.presentation.homefragment.adapter
+package com.aeryz.foodgoapps.presentation.home.adapter.subadapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,11 +10,16 @@ import com.aeryz.foodgoapps.core.ViewHolderBinder
 import com.aeryz.foodgoapps.databinding.ItemGridFoodsBinding
 import com.aeryz.foodgoapps.databinding.ItemLinearFoodsBinding
 import com.aeryz.foodgoapps.model.Food
+import com.aeryz.foodgoapps.presentation.home.adapter.model.AdapterLayoutMode
+import com.aeryz.foodgoapps.presentation.home.adapter.viewholder.GridFoodItemViewHolder
+import com.aeryz.foodgoapps.presentation.home.adapter.viewholder.LinearFoodItemViewHolder
 
 class FoodListAdapter(
     var adapterLayoutMode: AdapterLayoutMode,
     private val onItemClick: (Food) -> Unit
 ) : RecyclerView.Adapter<ViewHolder>() {
+
+    private var items: MutableList<Food> = mutableListOf()
 
     private val dataDiffer = AsyncListDiffer(this,object : DiffUtil.ItemCallback<Food>(){
         override fun areContentsTheSame(oldItem: Food, newItem: Food): Boolean {
@@ -63,8 +68,25 @@ class FoodListAdapter(
         dataDiffer.submitList(data)
     }
 
+
     fun refreshList(){
         notifyItemRangeChanged(0,dataDiffer.currentList.size)
+    }
+
+
+
+    fun setItems(items: List<Food>) {
+        dataDiffer.submitList(items)
+    }
+
+    fun addItems(items: List<Food>) {
+        val currentList = dataDiffer.currentList.toMutableList()
+        currentList.addAll(items)
+        dataDiffer.submitList(currentList)
+    }
+
+    fun clearItems() {
+        dataDiffer.submitList(emptyList())
     }
 
 }
