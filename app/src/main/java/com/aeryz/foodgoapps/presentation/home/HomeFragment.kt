@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aeryz.foodgoapps.data.datasource.dummy.CategoryDataSource
 import com.aeryz.foodgoapps.data.datasource.dummy.CategoryDataSourceImpl
@@ -17,6 +16,7 @@ import com.aeryz.foodgoapps.data.repository.ProductRepository
 import com.aeryz.foodgoapps.data.repository.ProductRepositoryImpl
 import com.aeryz.foodgoapps.databinding.FragmentHomeBinding
 import com.aeryz.foodgoapps.model.Food
+import com.aeryz.foodgoapps.presentation.detail.DetailActivity
 import com.aeryz.foodgoapps.presentation.home.adapter.HomeAdapter
 import com.aeryz.foodgoapps.settings.SettingsToogleLayoutMode
 import com.aeryz.foodgoapps.utils.GenericViewModelFactory
@@ -52,8 +52,7 @@ class HomeFragment : Fragment() {
 
 
     private fun navigateToDetail(food: Food) {
-        val action = HomeFragmentDirections.navigateToDetailFragment(food)
-        findNavController().navigate(action)
+        DetailActivity.startActivity(requireContext(),food)
     }
 
     private val viewModel: HomeViewModel by viewModels {
