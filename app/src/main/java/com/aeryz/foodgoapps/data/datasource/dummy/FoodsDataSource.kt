@@ -1,4 +1,4 @@
-package com.aeryz.foodgoapps.data
+package com.aeryz.foodgoapps.data.datasource.dummy
 
 import com.aeryz.foodgoapps.R
 import com.aeryz.foodgoapps.model.Food
