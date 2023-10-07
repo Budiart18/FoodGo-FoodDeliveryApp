@@ -23,7 +23,7 @@
         android:layout_marginHorizontal="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/iv_notification_img"
+        app:layout_constraintEnd_toStartOf="@+id/iv_settings"
         app:layout_constraintStart_toEndOf="@+id/siv_profile_img"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -44,10 +44,10 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/iv_notification_img"
+        android:id="@+id/iv_settings"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@drawable/iv_notification_icon"
+        android:src="@drawable/ic_menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ll_location_bar"
         app:layout_constraintTop_toTopOf="parent" />

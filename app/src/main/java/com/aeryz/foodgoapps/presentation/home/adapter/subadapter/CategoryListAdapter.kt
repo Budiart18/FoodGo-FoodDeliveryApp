@@ -3,6 +3,7 @@ package com.aeryz.foodgoapps.presentation.home.adapter.subadapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.aeryz.foodgoapps.databinding.ItemListCategoriesBinding
 import com.aeryz.foodgoapps.model.Category
 
@@ -46,7 +47,7 @@ class CategoryListAdapter(private val itemClick: (Category) -> Unit) :
 
         fun bindView(item: Category) {
             with(item) {
-                binding.sivCategoryImage.setImageResource(item.categoryImage)
+                binding.sivCategoryImage.load(item.categoryImage)
                 binding.tvCategoryName.text = item.categoryName
                 itemView.setOnClickListener { itemClick(this) }
             }
