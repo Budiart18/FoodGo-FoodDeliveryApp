@@ -157,14 +157,15 @@
                     style="@style/TextAppearance.Material3.TitleSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Notes (Opsional) :" />
+                    android:text="@string/text_notes_title" />
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_notes"
                     android:layout_width="match_parent"
                     android:layout_height="42dp"
                     android:layout_marginTop="8dp"
-                    android:autofillHints="Please add extra sauce..."
+                    android:padding="8dp"
+                    android:hint="@string/text_hint_notes"
                     android:background="@color/app_color_primary_container" />
             </LinearLayout>
 
@@ -215,7 +216,7 @@
                     android:layout_height="24dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:src="@drawable/ib_minus" />
+                    android:src="@drawable/ic_minus" />
 
                 <TextView
                     android:id="@+id/tv_food_total"
@@ -231,7 +232,7 @@
                     android:layout_height="24dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:src="@drawable/ib_plus"/>
+                    android:src="@drawable/ic_plus"/>
 
             </LinearLayout>
 

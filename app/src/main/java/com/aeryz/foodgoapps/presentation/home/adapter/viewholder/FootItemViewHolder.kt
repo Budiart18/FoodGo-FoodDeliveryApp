@@ -1,41 +1,46 @@
 package com.aeryz.foodgoapps.presentation.home.adapter.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.aeryz.foodgoapps.R
 import com.aeryz.foodgoapps.core.ViewHolderBinder
 import com.aeryz.foodgoapps.databinding.ItemGridFoodsBinding
 import com.aeryz.foodgoapps.databinding.ItemLinearFoodsBinding
-import com.aeryz.foodgoapps.model.Food
+import com.aeryz.foodgoapps.model.Product
 
 
 class LinearFoodItemViewHolder(
     private val binding: ItemLinearFoodsBinding,
-    private val onItemClick : (Food) -> Unit
-) : RecyclerView.ViewHolder(binding.root),ViewHolderBinder<Food> {
-    override fun bind (item : Food) {
+    private val onItemClick : (Product) -> Unit
+) : RecyclerView.ViewHolder(binding.root),ViewHolderBinder<Product> {
+    override fun bind (item : Product) {
         binding.root.setOnClickListener {
             onItemClick.invoke(item)
         }
-        binding.sivFoodImage.setImageResource(item.foodImage)
-        binding.tvFoodName.text = item.foodName
-        binding.tvFoodPrice.text = itemView.context.getString(R.string.text_food_price_format, item.foodPrice)
-        binding.tvFoodShopDistance.text = itemView.context.getString(R.string.text_shop_distance_format, item.foodShopDistance)
-        binding.tvFoodRating.text = itemView.context.getString(R.string.text_food_reviews_format, item.foodRating)
+        binding.sivFoodImage.load(item.productImageUrl){
+            crossfade(true)
+        }
+        binding.tvFoodName.text = item.productName
+        binding.tvFoodPrice.text = itemView.context.getString(R.string.text_food_price_format, item.productPrice)
+        binding.tvFoodShopDistance.text = itemView.context.getString(R.string.text_shop_distance_format, item.productShopDistance)
+        binding.tvFoodRating.text = itemView.context.getString(R.string.text_food_reviews_format, item.productRating)
     }
 }
 
 class GridFoodItemViewHolder(
     private val binding: ItemGridFoodsBinding,
-    private val onItemClick : (Food) -> Unit
-) : RecyclerView.ViewHolder(binding.root),ViewHolderBinder<Food> {
-    override fun bind (item : Food) {
+    private val onItemClick : (Product) -> Unit
+) : RecyclerView.ViewHolder(binding.root),ViewHolderBinder<Product> {
+    override fun bind (item : Product) {
         binding.root.setOnClickListener {
             onItemClick.invoke(item)
         }
-        binding.sivFoodImage.setImageResource(item.foodImage)
-        binding.tvFoodName.text = item.foodName
-        binding.tvFoodPrice.text = itemView.context.getString(R.string.text_food_price_format, item.foodPrice)
-        binding.tvFoodShopDistance.text = itemView.context.getString(R.string.text_shop_distance_format, item.foodShopDistance)
-        binding.tvFoodRating.text = itemView.context.getString(R.string.text_food_reviews_format, item.foodRating)
+        binding.sivFoodImage.load(item.productImageUrl){
+            crossfade(true)
+        }
+        binding.tvFoodName.text = item.productName
+        binding.tvFoodPrice.text = itemView.context.getString(R.string.text_food_price_format, item.productPrice)
+        binding.tvFoodShopDistance.text = itemView.context.getString(R.string.text_shop_distance_format, item.productShopDistance)
+        binding.tvFoodRating.text = itemView.context.getString(R.string.text_food_reviews_format, item.productRating)
     }
 }
