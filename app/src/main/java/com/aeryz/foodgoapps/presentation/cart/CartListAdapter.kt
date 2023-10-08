@@ -14,6 +14,7 @@ import com.aeryz.foodgoapps.databinding.ItemCartProductOrderBinding
 import com.aeryz.foodgoapps.model.Cart
 import com.aeryz.foodgoapps.model.CartProduct
 import com.aeryz.foodgoapps.utils.doneEditing
+import com.aeryz.foodgoapps.utils.toCurrencyFormat
 
 class CartListAdapter(private val cartListener: CartListener? = null) :
     RecyclerView.Adapter<ViewHolder>(){
@@ -81,7 +82,7 @@ class CartOrderViewHolder(
                 item.cart.itemQuantity.toString()
             )
             tvProductName.text = item.product.productName
-            tvProductPrice.text = (item.cart.itemQuantity * item.product.productPrice).toString()
+            tvProductPrice.text = (item.cart.itemQuantity * item.product.productPrice).toCurrencyFormat()
         }
     }
 }
@@ -122,7 +123,7 @@ class CartViewHolder(
                 crossfade(true)
             }
             tvProductName.text = item.product.productName
-            tvProductPrice.text = (item.cart.itemQuantity * item.product.productPrice).toString()
+            tvProductPrice.text = (item.cart.itemQuantity * item.product.productPrice).toCurrencyFormat()
             tvProductCount.text = item.cart.itemQuantity.toString()
         }
     }

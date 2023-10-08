@@ -7,6 +7,7 @@ import com.aeryz.foodgoapps.core.ViewHolderBinder
 import com.aeryz.foodgoapps.databinding.ItemGridFoodsBinding
 import com.aeryz.foodgoapps.databinding.ItemLinearFoodsBinding
 import com.aeryz.foodgoapps.model.Product
+import com.aeryz.foodgoapps.utils.toCurrencyFormat
 
 
 class LinearFoodItemViewHolder(
@@ -21,7 +22,7 @@ class LinearFoodItemViewHolder(
             crossfade(true)
         }
         binding.tvFoodName.text = item.productName
-        binding.tvFoodPrice.text = itemView.context.getString(R.string.text_food_price_format, item.productPrice)
+        binding.tvFoodPrice.text = item.productPrice.toCurrencyFormat()
         binding.tvFoodShopDistance.text = itemView.context.getString(R.string.text_shop_distance_format, item.productShopDistance)
         binding.tvFoodRating.text = itemView.context.getString(R.string.text_food_reviews_format, item.productRating)
     }
@@ -39,7 +40,7 @@ class GridFoodItemViewHolder(
             crossfade(true)
         }
         binding.tvFoodName.text = item.productName
-        binding.tvFoodPrice.text = itemView.context.getString(R.string.text_food_price_format, item.productPrice)
+        binding.tvFoodPrice.text = item.productPrice.toCurrencyFormat()
         binding.tvFoodShopDistance.text = itemView.context.getString(R.string.text_shop_distance_format, item.productShopDistance)
         binding.tvFoodRating.text = itemView.context.getString(R.string.text_food_reviews_format, item.productRating)
     }

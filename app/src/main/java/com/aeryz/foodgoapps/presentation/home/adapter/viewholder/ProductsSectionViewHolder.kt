@@ -28,18 +28,32 @@ class ProductsSectionViewHolder(
     }
 
     init {
+        binding.rvListFoods.layoutManager = LinearLayoutManager(binding.root.context)
         productViewModel.layoutManagerType.observe(itemView.context as LifecycleOwner) {layoutManagerType ->
             adapter.setLayoutManagerType(layoutManagerType)
             updateLayoutManagerImage(layoutManagerType)
+            adapter.refreshList()
         }
+        setupSwitchModeListener()
     }
 
+    private fun setupSwitchModeListener(){
+        binding.ibSwitchMode.setOnClickListener {
+            val newLayoutManagerType = when (productViewModel.layoutManagerType.value) {
+                LayoutManagerType.LINEAR -> LayoutManagerType.GRID
+                LayoutManagerType.GRID -> LayoutManagerType.LINEAR
+                else -> LayoutManagerType.LINEAR
+            }
+            productViewModel.setLayoutManagerType(newLayoutManagerType)
+            updateLayoutManagerImage(newLayoutManagerType)
+            switchLayoutManager(newLayoutManagerType)
+            adapter.refreshList()
+        }
+    }
     private fun updateLayoutManagerImage(layoutManagerType: LayoutManagerType?) {
         val imageResId = when (layoutManagerType) {
             LayoutManagerType.GRID -> R.drawable.ic_grid_mode
-            else -> {
-                R.drawable.ic_linear_mode
-            }            }
+            else -> R.drawable.ic_linear_mode          }
         binding.ibSwitchMode.setImageResource(imageResId)
     }
 
@@ -48,6 +62,7 @@ class ProductsSectionViewHolder(
             LayoutManagerType.LINEAR -> LinearLayoutManager(binding.root.context)
             LayoutManagerType.GRID -> GridLayoutManager(binding.root.context, 2)
         }
+        adapter.setLayoutManagerType(layoutManagerType)
         adapter.refreshList()
     }
 
@@ -60,16 +75,6 @@ class ProductsSectionViewHolder(
                 binding.rvListFoods.apply {
                     isVisible = true
                     adapter = this@ProductsSectionViewHolder.adapter
-                }
-                binding.ibSwitchMode.setOnClickListener {
-                    val newLayoutManagerType = when (productViewModel.layoutManagerType.value) {
-                        LayoutManagerType.LINEAR -> LayoutManagerType.GRID
-                        LayoutManagerType.GRID -> LayoutManagerType.LINEAR
-                        else -> LayoutManagerType.LINEAR
-                    }
-                    productViewModel.setLayoutManagerType(newLayoutManagerType)
-                    updateLayoutManagerImage(productViewModel.layoutManagerType.value ?: LayoutManagerType.LINEAR)
-                    switchLayoutManager(newLayoutManagerType)
                 }
                 item.data.payload?.let { data -> adapter.submitData(data) }
             }, doOnLoading = {
