@@ -87,7 +87,7 @@ class ProductListAdapter(
     fun setLayoutManagerType(layoutManagerType: LayoutManagerType) {
         if (this.layoutManagerType != layoutManagerType) {
             this.layoutManagerType = layoutManagerType
-            notifyDataSetChanged() // or you can use notifyItemRangeChanged(0, itemCount)
+            refreshList()
         }
     }
 
