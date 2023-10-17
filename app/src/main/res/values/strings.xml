@@ -40,5 +40,24 @@
     <string name="text_email">Email</string>
     <string name="text_phone_number">Phone Number</string>
     <string name="text_submit">Submit</string>
+    <string name="text_hint_name">Name</string>
+    <string name="text_hint_email">Email</string>
+    <string name="text_hint_password">Password</string>
+    <string name="text_hint_confirm_password">Confirm Password</string>
+    <string name="text_button_log_in">Log In</string>
+    <string name="text_navigate_to_register">Don\'t have account ? Register Here !</string>
+    <string name="text_navigate_to_login">Already have an account ? Login Here !</string>
+    <string name="text_button_register">Register</string>
+    <string name="text_highlight_login_here">Login Here !</string>
+    <string name="text_error_name_empty">Name can\'t be empty</string>
+    <string name="text_error_email_empty">Email can\'t be empty</string>
+    <string name="text_error_email_not_valid">Enter a valid email format</string>
+    <string name="text_error_password_empty">Password can\'t be empty</string>
+    <string name="text_error_password_less_than_8_char">Password less than 8 character</string>
+    <string name="text_error_password_not_match">Password doesn\'t match</string>
+    <string name="text_highlight_register_here">Register Here !</string>
+    <string name="btn_change_profile">Change Profile</string>
+    <string name="text_change_password">Change Password</string>
+    <string name="text_logout_account">Logout Account</string>
 
 </resources>

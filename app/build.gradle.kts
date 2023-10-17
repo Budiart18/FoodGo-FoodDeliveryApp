@@ -4,6 +4,7 @@ plugins {
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.devtools.ksp")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -29,6 +30,15 @@ android {
             )
         }
     }
+    flavorDimensions += "env"
+    productFlavors {
+        create("production") {
+            buildConfigField("String","BASE_URl","\"https://39cc9dac-21fc-401d-9cec-9100ffc66406.mock.pstmn.io\"")
+        }
+        create("integration") {
+            buildConfigField("String","BASE_URl","\"hhttps://39cc9dac-21fc-401d-9cec-9100ffc66406.mock.pstmn.io\"")
+        }
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -38,6 +48,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -49,6 +60,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.android.gms:play-services-analytics-impl:18.0.3")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -76,4 +88,8 @@ dependencies {
     ksp("androidx.room:room-compiler:2.5.2")
     //Lottie animation
     implementation ("com.airbnb.android:lottie:6.1.0")
+    //retrofit & okhttp
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.okhttp3:okhttp:4.11.0")
 }

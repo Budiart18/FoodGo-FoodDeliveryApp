@@ -1,39 +1,66 @@
 package com.aeryz.foodgoapps.presentation.profile
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aeryz.foodgoapps.data.repository.UserRepository
+import com.aeryz.foodgoapps.model.User
+import com.aeryz.foodgoapps.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.sql.ResultSet
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel(private val repository: UserRepository) : ViewModel() {
+
+    private val _changePhotoResult = MutableLiveData<ResultWrapper<Boolean>>()
+    val changePhotoResult: LiveData<ResultWrapper<Boolean>>
+        get() = _changePhotoResult
+
+    private val _changeProfileResult = MutableLiveData<ResultWrapper<Boolean>>()
+    val changeProfileResult: LiveData<ResultWrapper<Boolean>>
+        get() = _changeProfileResult
+
+    fun getCurrentUser() = repository.getCurrentUser()
+
+    fun updateProfilePicture(photoUri: Uri?){
+        viewModelScope.launch(Dispatchers.IO) {
+            photoUri?.let {
+                repository.updateProfile(photoUri = photoUri).collect{
+                    _changePhotoResult.postValue(it)
+                }
+            }
+        }
+    }
+
+    fun updateFullName(fullName: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateProfile(fullName).collect{
+                _changeProfileResult.postValue(it)
+            }
+        }
+    }
+
+    fun createChangePwdRequest(){
+        repository.sendChangePasswordRequestByEmail()
+    }
+
+    fun doLogout(){
+        repository.doLogout()
+    }
 
     private val _isEditModeEnabled = MutableLiveData<Boolean>()
-
     val isEditModeEnabled: LiveData<Boolean>
         get() = _isEditModeEnabled
-
-    val username = MutableLiveData<String>()
-    val password = MutableLiveData<String>()
-    val email = MutableLiveData<String>()
-    val phoneNumber = MutableLiveData<String>()
-
     init {
         _isEditModeEnabled.value = false
     }
 
     fun toggleEditMode() {
         _isEditModeEnabled.value = _isEditModeEnabled.value?.not()
-    }
-
-    fun submitProfile() {
-        viewModelScope.launch {
-            withContext(Dispatchers.Main) {
-
-            }
-        }
     }
 
 }
