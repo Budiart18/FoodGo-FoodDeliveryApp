@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_profile_image"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -60,86 +60,69 @@
                 app:layout_constraintWidth_percent="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/iv_profile_picture"/>
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+                tools:src="@tools:sample/avatars"/>
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_edit_photo"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="@id/iv_profile_image"
+                app:layout_constraintEnd_toEndOf="@id/iv_profile_image"
+                android:src="@drawable/ic_edit" />
 
-            <LinearLayout
-                android:id="@+id/ll_edit_profile"
+            <include
+                android:id="@+id/layout_form"
+                layout="@layout/layout_user_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="32dp"
-                app:layout_constraintTop_toBottomOf="@+id/iv_profile_image">
+                android:layout_margin="16dp"
+                app:layout_constraintTop_toBottomOf="@id/iv_profile_image" />
 
-                <TextView
-                    style="@style/TextAppearance.Material3.TitleMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text_username" />
-
-                <EditText
-                    android:id="@+id/et_username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/app_color_primary_container"
-                    android:padding="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="Budiart18"/>
-
-                <TextView
-                    style="@style/TextAppearance.Material3.TitleMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text_password" />
-
-                <EditText
-                    android:id="@+id/et_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/app_color_primary_container"
-                    android:padding="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="Budiart123"/>
-
-                <TextView
-                    style="@style/TextAppearance.Material3.TitleMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text_email" />
-
-                <EditText
-                    android:id="@+id/et_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/app_color_primary_container"
-                    android:padding="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="ragilbudiart@gmail.com"/>
-
-                <TextView
-                    style="@style/TextAppearance.Material3.TitleMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text_phone_number" />
-
-                <EditText
-                    android:id="@+id/et_phone_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/app_color_primary_container"
-                    android:padding="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="62857......."/>
+            <FrameLayout
+                android:id="@+id/fl_btn_loading_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                app:layout_constraintTop_toBottomOf="@id/layout_form">
 
                 <Button
-                    android:id="@+id/button_submit_profile"
+                    android:id="@+id/btn_change_profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/text_submit"
-                    android:textColor="@color/black"
-                    android:paddingVertical="16dp"/>
+                    android:text="@string/btn_change_profile" />
 
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/pb_loading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:visibility="gone" />
+            </FrameLayout>
 
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_change_pwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/text_change_password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fl_btn_loading_state" />
+
+            <TextView
+                android:id="@+id/tv_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="8dp"
+                android:text="@string/text_logout_account"
+                android:textColor="@color/app_color_primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_change_pwd" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
