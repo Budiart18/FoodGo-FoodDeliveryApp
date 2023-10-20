@@ -34,4 +34,23 @@
     <string name="text_email">Email</string>
     <string name="text_phone_number">Nomor Telepon</string>
     <string name="text_submit">Kumpulkan</string>
+    <string name="text_hint_name">Nama</string>
+    <string name="text_hint_password">Kata Sandi</string>
+    <string name="text_hint_confirm_password">Konfirmasi Kata Sandi</string>
+    <string name="text_button_log_in">Masuk</string>
+    <string name="text_navigate_to_register">Belum memiliki akun ? Daftar Disini !</string>
+    <string name="text_navigate_to_login">Sudah memiliki akuin ? Masuk Disini !</string>
+    <string name="text_button_register">Daftar</string>
+    <string name="text_highlight_login_here">Masuk Disini !</string>
+    <string name="text_error_name_empty">Nama tidak boleh kosong</string>
+    <string name="text_error_email_empty">Email tidak boleh kosong</string>
+    <string name="text_error_email_not_valid">Masukkan Format Email yang sah</string>
+    <string name="text_error_password_empty">Kata Sandi tidak boleh kosong</string>
+    <string name="text_error_password_less_than_8_char">Kata Sandi kurang dari 8 karakter</string>
+    <string name="text_error_password_not_match">Kata Sandi tidak sama</string>
+    <string name="text_highlight_register_here">Daftar Disini !</string>
+    <string name="btn_change_profile">Ubah Profil</string>
+    <string name="text_change_password">Ubah Kata Sandi</string>
+    <string name="text_logout_account">Keluar Akun</string>
+    <string name="text_product_not_found">Produk tidak ditemukan</string>
 </resources>

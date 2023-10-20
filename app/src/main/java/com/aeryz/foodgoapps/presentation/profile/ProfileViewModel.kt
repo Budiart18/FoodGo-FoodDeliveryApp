@@ -6,13 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aeryz.foodgoapps.data.repository.UserRepository
-import com.aeryz.foodgoapps.model.User
 import com.aeryz.foodgoapps.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.sql.ResultSet
 
 class ProfileViewModel(private val repository: UserRepository) : ViewModel() {
 

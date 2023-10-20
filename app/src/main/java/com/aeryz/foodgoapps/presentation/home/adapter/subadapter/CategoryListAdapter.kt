@@ -2,6 +2,8 @@ package com.aeryz.foodgoapps.presentation.home.adapter.subadapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.aeryz.foodgoapps.databinding.ItemListCategoriesBinding
@@ -10,22 +12,25 @@ import com.aeryz.foodgoapps.model.Category
 class CategoryListAdapter(private val itemClick: (Category) -> Unit) :
     RecyclerView.Adapter<CategoryListAdapter.ItemCategoryViewHolder>() {
 
-    private var items: MutableList<Category> = mutableListOf()
+    private val dataDiffer =
+        AsyncListDiffer(this, object : DiffUtil.ItemCallback<Category>() {
+            override fun areItemsTheSame(
+                oldItem: Category,
+                newItem: Category
+            ): Boolean {
+                return oldItem.id == newItem.id
+            }
 
-    fun setItems(items: List<Category>) {
-        this.items.clear()
-        this.items.addAll(items)
-        notifyDataSetChanged()
-    }
+            override fun areContentsTheSame(
+                oldItem: Category,
+                newItem: Category
+            ): Boolean {
+                return oldItem.hashCode() == newItem.hashCode()
+            }
+        })
 
-    fun addItems(items: List<Category>) {
-        this.items.addAll(items)
-        notifyDataSetChanged()
-    }
-
-    fun clearItems() {
-        this.items.clear()
-        notifyDataSetChanged()
+    fun submitData(data: List<Category>) {
+        dataDiffer.submitList(data)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemCategoryViewHolder {
@@ -35,10 +40,10 @@ class CategoryListAdapter(private val itemClick: (Category) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: ItemCategoryViewHolder, position: Int) {
-        holder.bindView(items[position])
+        holder.bindView(dataDiffer.currentList[position])
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int = dataDiffer.currentList.size
 
     class ItemCategoryViewHolder(
         private val binding: ItemListCategoriesBinding,
