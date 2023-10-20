@@ -10,14 +10,19 @@ import com.aeryz.foodgoapps.core.ViewHolderBinder
 import com.aeryz.foodgoapps.databinding.ItemGridFoodsBinding
 import com.aeryz.foodgoapps.databinding.ItemLinearFoodsBinding
 import com.aeryz.foodgoapps.model.Product
-import com.aeryz.foodgoapps.presentation.home.adapter.model.LayoutManagerType
 import com.aeryz.foodgoapps.presentation.home.adapter.viewholder.GridFoodItemViewHolder
 import com.aeryz.foodgoapps.presentation.home.adapter.viewholder.LinearFoodItemViewHolder
+import java.lang.IllegalArgumentException
 
 class ProductListAdapter(
-    private var layoutManagerType: LayoutManagerType,
+    var layoutMode: Int,
     private val onItemClick: (Product) -> Unit
 ) : RecyclerView.Adapter<ViewHolder>() {
+
+    companion object {
+        const val LINEAR_LAYOUT = 1
+        const val GRID_LAYOUT = 2
+    }
 
     private val dataDiffer = AsyncListDiffer(this,object : DiffUtil.ItemCallback<Product>(){
         override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
@@ -29,9 +34,13 @@ class ProductListAdapter(
         }
     })
 
+    fun submitData(data : List<Product>){
+        dataDiffer.submitList(data)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when(viewType){
-            LayoutManagerType.LINEAR.ordinal -> {
+            LINEAR_LAYOUT -> {
                 LinearFoodItemViewHolder(
                     binding = ItemLinearFoodsBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
@@ -39,13 +48,16 @@ class ProductListAdapter(
                     onItemClick = onItemClick
                 )
             }
-            else -> {
+            GRID_LAYOUT -> {
                 GridFoodItemViewHolder(
                     binding = ItemGridFoodsBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
                     ),
                     onItemClick = onItemClick
                 )
+            }
+            else -> {
+                throw IllegalArgumentException("Invalid View Type")
             }
         }
     }
@@ -59,36 +71,11 @@ class ProductListAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return layoutManagerType.ordinal
-    }
-
-    fun submitData(data : List<Product>){
-        dataDiffer.submitList(data)
+        return layoutMode
     }
 
     fun refreshList(){
         notifyItemRangeChanged(0,dataDiffer.currentList.size)
-    }
-
-    fun setItems(items: List<Product>) {
-        dataDiffer.submitList(items)
-    }
-
-    fun addItems(items: List<Product>) {
-        val currentList = dataDiffer.currentList.toMutableList()
-        currentList.addAll(items)
-        dataDiffer.submitList(currentList)
-    }
-
-    fun clearItems() {
-        dataDiffer.submitList(emptyList())
-    }
-
-    fun setLayoutManagerType(layoutManagerType: LayoutManagerType) {
-        if (this.layoutManagerType != layoutManagerType) {
-            this.layoutManagerType = layoutManagerType
-            refreshList()
-        }
     }
 
 }

@@ -29,9 +29,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class ProfileFragment : Fragment() {
 
-    private val binding : FragmentProfileBinding by lazy {
-        FragmentProfileBinding.inflate(layoutInflater)
-    }
+    private lateinit var binding : FragmentProfileBinding
     private fun createViewModel(): ProfileViewModel {
         val firebaseAuth = FirebaseAuth.getInstance()
         val dataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
@@ -51,6 +49,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -97,9 +96,25 @@ class ProfileFragment : Fragment() {
 
 
     private fun setupForm() {
-        binding.layoutForm.tilName.isVisible = true
-        binding.layoutForm.tilEmail.isVisible = true
-        binding.layoutForm.etEmail.isEnabled = false
+        viewModel.isEditModeEnabled.observe(viewLifecycleOwner){isEditModeEnabled ->
+            if (isEditModeEnabled){
+                binding.ivEdit.load(R.drawable.ic_edit_active)
+                binding.ivEditPhoto.isEnabled = true
+                binding.layoutForm.tilName.isVisible = true
+                binding.layoutForm.etName.isEnabled = true
+                binding.layoutForm.tilEmail.isVisible = true
+                binding.layoutForm.etEmail.isEnabled = false
+                binding.btnChangeProfile.isEnabled = true
+            } else {
+                binding.ivEdit.load(R.drawable.ic_edit)
+                binding.ivEditPhoto.isEnabled = false
+                binding.layoutForm.tilName.isVisible = true
+                binding.layoutForm.etName.isEnabled = false
+                binding.layoutForm.tilEmail.isVisible = true
+                binding.layoutForm.etEmail.isEnabled = false
+                binding.btnChangeProfile.isEnabled = false
+            }
+        }
     }
 
     private fun setClickListeners() {
@@ -116,6 +131,9 @@ class ProfileFragment : Fragment() {
         }
         binding.tvLogout.setOnClickListener {
             doLogout()
+        }
+        binding.ivEdit.setOnClickListener {
+            viewModel.toggleEditMode()
         }
     }
 

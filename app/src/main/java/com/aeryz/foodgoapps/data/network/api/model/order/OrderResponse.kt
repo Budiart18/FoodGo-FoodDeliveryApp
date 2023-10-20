@@ -1,15 +1,13 @@
-package com.aeryz.foodgoapps.data.network.api.model
+package com.aeryz.foodgoapps.data.network.api.model.order
 
-
-import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import com.google.gson.annotations.SerializedName
+
 
 @Keep
-data class MenuResponse(
+data class OrderResponse(
     @SerializedName("code")
     val code: Int?,
-    @SerializedName("data")
-    val data: List<Data>?,
     @SerializedName("message")
     val message: String?,
     @SerializedName("status")

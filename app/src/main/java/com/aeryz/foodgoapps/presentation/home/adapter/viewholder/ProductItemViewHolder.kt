@@ -2,7 +2,6 @@ package com.aeryz.foodgoapps.presentation.home.adapter.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.aeryz.foodgoapps.R
 import com.aeryz.foodgoapps.core.ViewHolderBinder
 import com.aeryz.foodgoapps.databinding.ItemGridFoodsBinding
 import com.aeryz.foodgoapps.databinding.ItemLinearFoodsBinding
@@ -23,8 +22,6 @@ class LinearFoodItemViewHolder(
         }
         binding.tvFoodName.text = item.productName
         binding.tvFoodPrice.text = item.productPrice.toCurrencyFormat()
-        binding.tvFoodShopDistance.text = itemView.context.getString(R.string.text_shop_distance_format, item.productShopDistance)
-        binding.tvFoodRating.text = itemView.context.getString(R.string.text_food_reviews_format, item.productRating)
     }
 }
 
@@ -41,7 +38,5 @@ class GridFoodItemViewHolder(
         }
         binding.tvFoodName.text = item.productName
         binding.tvFoodPrice.text = item.productPrice.toCurrencyFormat()
-        binding.tvFoodShopDistance.text = itemView.context.getString(R.string.text_shop_distance_format, item.productShopDistance)
-        binding.tvFoodRating.text = itemView.context.getString(R.string.text_food_reviews_format, item.productRating)
     }
 }

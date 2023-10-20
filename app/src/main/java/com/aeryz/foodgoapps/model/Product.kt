@@ -2,16 +2,15 @@ package com.aeryz.foodgoapps.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.util.UUID
 
 @Parcelize
 data class Product(
-    val id: Int? = null,
+    val id: String = UUID.randomUUID().toString(),
     val productName: String,
     val productDescription: String,
     val productPrice: Double,
+    val productFormattedPrice: String,
     val productImageUrl: String,
-    val productRating: Double,
-    val productShopDistance: Double,
     val productShopLocation: String,
-    val productShopUrl: String,
 ) : Parcelable

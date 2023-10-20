@@ -63,9 +63,9 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun navigateToShopMaps(product: Product?) {
-        val url = product?.productShopUrl
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        startActivity(intent)
+        val gmmIntentUri = Uri.parse("geo:0,0?q=" + product?.productShopLocation)
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+        startActivity(mapIntent)
     }
 
     private fun observeData() {
@@ -96,8 +96,6 @@ class DetailActivity : AppCompatActivity() {
             binding.tvFoodPrice.text = item.productPrice.toCurrencyFormat()
             binding.tvFoodPriceLiveData.text = item.productPrice.toCurrencyFormat()
             binding.tvFoodDescription.text = item.productDescription
-            binding.tvFoodShopDistance.text = getString(R.string.text_shop_distance_format,item.productShopDistance)
-            binding.tvFoodRating.text = getString(R.string.text_food_reviews_format,item.productRating)
             binding.tvShopLocation.text = item.productShopLocation
         }
     }

@@ -1,22 +1,32 @@
 package com.aeryz.foodgoapps.data.network.api.service
 
 import com.aeryz.foodgoapps.BuildConfig
-import com.aeryz.foodgoapps.data.network.api.model.MenuResponse
+import com.aeryz.foodgoapps.data.network.api.model.category.CategoriesResponse
+import com.aeryz.foodgoapps.data.network.api.model.order.OrderRequest
+import com.aeryz.foodgoapps.data.network.api.model.order.OrderResponse
+import com.aeryz.foodgoapps.data.network.api.model.product.ProductsResponse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
-interface RestaurantService {
+interface FoodGoApiService {
 
     @GET("listmenu")
-    suspend fun getMenus(@Query("c") category: String): MenuResponse
+    suspend fun getProducts(@Query("c") category: String? = null): ProductsResponse
 
+    @GET("category")
+    suspend fun getCategories(): CategoriesResponse
+
+    @POST("order")
+    suspend fun createOrder(@Body orderRequest: OrderRequest): OrderResponse
     companion object {
         @JvmStatic
-        operator fun invoke(): MenuResponse {
+        operator fun invoke(): FoodGoApiService {
             val okHttpClient = OkHttpClient.Builder()
                 .connectTimeout(120, TimeUnit.SECONDS)
                 .readTimeout(120, TimeUnit.SECONDS)
@@ -26,7 +36,7 @@ interface RestaurantService {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build()
-            return retrofit.create(MenuResponse::class.java)
+            return retrofit.create(FoodGoApiService::class.java)
         }
     }
 

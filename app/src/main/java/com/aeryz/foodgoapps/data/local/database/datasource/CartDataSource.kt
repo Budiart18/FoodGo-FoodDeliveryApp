@@ -2,12 +2,11 @@ package com.aeryz.foodgoapps.data.local.database.datasource
 
 import com.aeryz.foodgoapps.data.local.database.dao.CartDao
 import com.aeryz.foodgoapps.data.local.database.entity.CartEntity
-import com.aeryz.foodgoapps.data.local.database.relation.CartProductRelation
 import kotlinx.coroutines.flow.Flow
 
 interface CartDataSource {
-    fun getAllCarts() : Flow<List<CartProductRelation>>
-    fun getCartById(cartId: Int) : Flow<CartProductRelation>
+    fun getAllCarts() : Flow<List<CartEntity>>
+    fun getCartById(cartId: Int) : Flow<CartEntity>
     suspend fun insertCarts(carts: List<CartEntity>)
     suspend fun insertCart(cart: CartEntity) : Long
     suspend fun updateCart(cart: CartEntity) : Int
@@ -16,11 +15,11 @@ interface CartDataSource {
 }
 
 class CartDatabaseDataSource(private val cartDao : CartDao) : CartDataSource {
-    override fun getAllCarts(): Flow<List<CartProductRelation>> {
+    override fun getAllCarts(): Flow<List<CartEntity>> {
         return cartDao.getAllCarts()
     }
 
-    override fun getCartById(cartId: Int): Flow<CartProductRelation> {
+    override fun getCartById(cartId: Int): Flow<CartEntity> {
         return cartDao.getCartById(cartId)
     }
 
