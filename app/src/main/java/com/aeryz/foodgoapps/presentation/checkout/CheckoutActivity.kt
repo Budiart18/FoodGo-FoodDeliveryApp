@@ -15,14 +15,21 @@ import com.aeryz.foodgoapps.R
 import com.aeryz.foodgoapps.data.local.database.AppDatabase
 import com.aeryz.foodgoapps.data.local.database.datasource.CartDataSource
 import com.aeryz.foodgoapps.data.local.database.datasource.CartDatabaseDataSource
+import com.aeryz.foodgoapps.data.network.api.datasource.FoodGoApiDataSource
+import com.aeryz.foodgoapps.data.network.api.service.FoodGoApiService
+import com.aeryz.foodgoapps.data.network.firebase.auth.FirebaseAuthDataSourceImpl
 import com.aeryz.foodgoapps.data.repository.CartRepository
 import com.aeryz.foodgoapps.data.repository.CartRepositoryImpl
+import com.aeryz.foodgoapps.data.repository.UserRepository
+import com.aeryz.foodgoapps.data.repository.UserRepositoryImpl
 import com.aeryz.foodgoapps.databinding.ActivityCheckoutBinding
 import com.aeryz.foodgoapps.presentation.cart.CartListAdapter
 import com.aeryz.foodgoapps.presentation.main.MainActivity
 import com.aeryz.foodgoapps.utils.GenericViewModelFactory
 import com.aeryz.foodgoapps.utils.proceedWhen
 import com.aeryz.foodgoapps.utils.toCurrencyFormat
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.google.firebase.auth.FirebaseAuth
 
 class CheckoutActivity : AppCompatActivity() {
 
@@ -38,8 +45,14 @@ class CheckoutActivity : AppCompatActivity() {
         val database = AppDatabase.getInstance(this)
         val cartDao = database.cartDao()
         val cartDataSource : CartDataSource = CartDatabaseDataSource(cartDao)
-        val repo : CartRepository = CartRepositoryImpl(cartDataSource)
-        GenericViewModelFactory.create(CheckoutViewModel(repo))
+        val chuckerInterceptor = ChuckerInterceptor(this.applicationContext)
+        val service = FoodGoApiService.invoke(chuckerInterceptor)
+        val apiDataSource = FoodGoApiDataSource(service)
+        val firebaseAuth = FirebaseAuth.getInstance()
+        val firebaseDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
+        val cartRepo : CartRepository = CartRepositoryImpl(cartDataSource, apiDataSource)
+        val userRepo : UserRepository = UserRepositoryImpl(firebaseDataSource)
+        GenericViewModelFactory.create(CheckoutViewModel(cartRepo,userRepo))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +68,7 @@ class CheckoutActivity : AppCompatActivity() {
             onBackPressed()
         }
         binding.layoutContent.btnCheckout.setOnClickListener {
-            customPopupOrderSuccess()
+            viewModel.createOrder()
         }
     }
 
@@ -86,12 +99,18 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     private fun observeData() {
+        observeCartList()
+        observeCheckoutResult()
+
+    }
+
+    private fun observeCartList() {
         viewModel.cartList.observe(this){result ->
             result.proceedWhen (
-                doOnSuccess = {result ->
+                doOnSuccess = {carts ->
                     binding.layoutContent.root.isVisible = true
                     binding.layoutContent.rvCart.isVisible = true
-                    result.payload?.let { (carts, totalPrice) ->
+                    carts.payload?.let { (carts, totalPrice) ->
                         adapter.submitData(carts)
                         binding.layoutContent.tvTotalPrice.text = totalPrice.toCurrencyFormat()
                     }
@@ -124,16 +143,24 @@ class CheckoutActivity : AppCompatActivity() {
                 }
             )
         }
-        viewModel.deleteAllCartsResult.observe(this) { result ->
+    }
+
+    private fun observeCheckoutResult() {
+        viewModel.checkoutResult.observe(this) { result ->
             result.proceedWhen(
                 doOnSuccess = {
-                    Toast.makeText(this, "Remove Cart List Success", Toast.LENGTH_SHORT).show()
+                    binding.layoutState.root.isVisible = false
+                    binding.layoutState.pbLoading.isVisible = false
+                    customPopupOrderSuccess()
                 },
                 doOnError = { err ->
+                    binding.layoutState.root.isVisible = false
+                    binding.layoutState.pbLoading.isVisible = false
                     Toast.makeText(this, err.exception?.message.orEmpty(), Toast.LENGTH_SHORT).show()
                 },
-                doOnEmpty = {
-                    Toast.makeText(this, "Cart is Empty", Toast.LENGTH_SHORT).show()
+                doOnLoading = {
+                    binding.layoutState.root.isVisible = true
+                    binding.layoutState.pbLoading.isVisible = true
                 }
             )
         }

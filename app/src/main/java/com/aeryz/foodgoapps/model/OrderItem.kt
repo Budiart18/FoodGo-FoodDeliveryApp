@@ -10,5 +10,10 @@ data class OrderItem(
 )
 
 fun OrderItem.toOrderItemRequest() = OrderItemRequest(
-    notes, price, name, qty
+    notes = this.notes,
+    price = this.price,
+    name = this.name,
+    qty = this.qty
 )
+
+fun Collection<OrderItem>.toOrderItemRequestList() = this.map { it.toOrderItemRequest() }

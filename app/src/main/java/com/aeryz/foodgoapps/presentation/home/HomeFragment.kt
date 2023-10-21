@@ -1,7 +1,6 @@
 package com.aeryz.foodgoapps.presentation.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +27,7 @@ import com.aeryz.foodgoapps.settings.SettingsDialogFragment
 import com.aeryz.foodgoapps.utils.GenericViewModelFactory
 import com.aeryz.foodgoapps.utils.PreferenceDataStoreHelperImpl
 import com.aeryz.foodgoapps.utils.proceedWhen
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 
 class HomeFragment : Fragment() {
 
@@ -45,7 +45,8 @@ class HomeFragment : Fragment() {
     }
 
     private val viewModel: HomeViewModel by viewModels {
-        val service = FoodGoApiService.invoke()
+        val chuckerInterceptor = ChuckerInterceptor(requireContext().applicationContext)
+        val service = FoodGoApiService.invoke(chuckerInterceptor)
         val dataSource = FoodGoApiDataSource(service)
         val repo: ProductRepository =
             ProductRepositoryImpl(dataSource)
