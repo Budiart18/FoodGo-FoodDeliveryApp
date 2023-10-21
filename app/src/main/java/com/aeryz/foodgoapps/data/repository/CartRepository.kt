@@ -4,8 +4,13 @@ import com.aeryz.foodgoapps.data.local.database.datasource.CartDataSource
 import com.aeryz.foodgoapps.data.local.database.entity.CartEntity
 import com.aeryz.foodgoapps.data.local.database.mapper.toCartEntity
 import com.aeryz.foodgoapps.data.local.database.mapper.toCartList
+import com.aeryz.foodgoapps.data.network.api.datasource.FoodGoDataSource
+import com.aeryz.foodgoapps.data.network.api.model.order.OrderItemRequest
+import com.aeryz.foodgoapps.data.network.api.model.order.OrderRequest
+import com.aeryz.foodgoapps.data.network.firebase.auth.FirebaseAuthDataSource
 import com.aeryz.foodgoapps.model.Cart
 import com.aeryz.foodgoapps.model.Product
+import com.aeryz.foodgoapps.model.toOrderItemRequestList
 import com.aeryz.foodgoapps.utils.ResultWrapper
 import com.aeryz.foodgoapps.utils.proceed
 import com.aeryz.foodgoapps.utils.proceedFlow
@@ -22,11 +27,13 @@ interface CartRepository {
     suspend fun decreaseCart(item: Cart): Flow<ResultWrapper<Boolean>>
     suspend fun deleteCart(item: Cart): Flow<ResultWrapper<Boolean>>
     suspend fun setCartNotes(item: Cart): Flow<ResultWrapper<Boolean>>
-    suspend fun deleteAllCarts(): Flow<ResultWrapper<Boolean>>
+    suspend fun deleteAllCarts()
+    suspend fun createOrder(items: List<Cart>, totalPrice: Int, username: String): Flow<ResultWrapper<Boolean>>
 }
 
 class CartRepositoryImpl(
-    private val dataSource: CartDataSource
+    private val dataSource: CartDataSource,
+    private val apiDataSource: FoodGoDataSource,
 ) : CartRepository {
 
     override fun getUserCartData(): Flow<ResultWrapper<Pair<List<Cart>, Double>>> {
@@ -102,8 +109,16 @@ class CartRepositoryImpl(
         return proceedFlow { dataSource.updateCart(item.toCartEntity()) > 0 }
     }
 
-    override suspend fun deleteAllCarts(): Flow<ResultWrapper<Boolean>> {
-        return proceedFlow { dataSource.deleteAllCarts() > 0 }
+    override suspend fun deleteAllCarts() {
+        dataSource.deleteAllCarts()
+    }
+
+    override suspend fun createOrder(items: List<Cart>, totalPrice: Int, username: String): Flow<ResultWrapper<Boolean>> {
+        return proceedFlow {
+            val orderItem = items.toOrderItemRequestList()
+            val orderRequest = OrderRequest(orderItem, totalPrice, username)
+            apiDataSource.createOrder(orderRequest).status == true
+        }
     }
 
 }

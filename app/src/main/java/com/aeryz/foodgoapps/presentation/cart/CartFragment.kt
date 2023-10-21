@@ -12,6 +12,8 @@ import com.aeryz.foodgoapps.R
 import com.aeryz.foodgoapps.data.local.database.AppDatabase
 import com.aeryz.foodgoapps.data.local.database.datasource.CartDataSource
 import com.aeryz.foodgoapps.data.local.database.datasource.CartDatabaseDataSource
+import com.aeryz.foodgoapps.data.network.api.datasource.FoodGoApiDataSource
+import com.aeryz.foodgoapps.data.network.api.service.FoodGoApiService
 import com.aeryz.foodgoapps.data.repository.CartRepository
 import com.aeryz.foodgoapps.data.repository.CartRepositoryImpl
 import com.aeryz.foodgoapps.databinding.FragmentCartBinding
@@ -21,6 +23,7 @@ import com.aeryz.foodgoapps.utils.GenericViewModelFactory
 import com.aeryz.foodgoapps.utils.hideKeyboard
 import com.aeryz.foodgoapps.utils.proceedWhen
 import com.aeryz.foodgoapps.utils.toCurrencyFormat
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 
 class CartFragment : Fragment() {
 
@@ -30,7 +33,10 @@ class CartFragment : Fragment() {
         val database = AppDatabase.getInstance(requireContext())
         val cartDao = database.cartDao()
         val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
-        val repo: CartRepository = CartRepositoryImpl(cartDataSource)
+        val chuckerInterceptor = ChuckerInterceptor(requireContext().applicationContext)
+        val service = FoodGoApiService.invoke(chuckerInterceptor)
+        val apiDataSource = FoodGoApiDataSource(service)
+        val repo: CartRepository = CartRepositoryImpl(cartDataSource, apiDataSource)
         GenericViewModelFactory.create(CartViewModel(repo))
     }
 

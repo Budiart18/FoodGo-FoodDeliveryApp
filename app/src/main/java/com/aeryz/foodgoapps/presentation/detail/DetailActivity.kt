@@ -12,6 +12,8 @@ import com.aeryz.foodgoapps.R
 import com.aeryz.foodgoapps.data.local.database.AppDatabase
 import com.aeryz.foodgoapps.data.local.database.datasource.CartDataSource
 import com.aeryz.foodgoapps.data.local.database.datasource.CartDatabaseDataSource
+import com.aeryz.foodgoapps.data.network.api.datasource.FoodGoApiDataSource
+import com.aeryz.foodgoapps.data.network.api.service.FoodGoApiService
 import com.aeryz.foodgoapps.data.repository.CartRepository
 import com.aeryz.foodgoapps.data.repository.CartRepositoryImpl
 import com.aeryz.foodgoapps.databinding.ActivityDetailBinding
@@ -19,6 +21,7 @@ import com.aeryz.foodgoapps.model.Product
 import com.aeryz.foodgoapps.utils.GenericViewModelFactory
 import com.aeryz.foodgoapps.utils.proceedWhen
 import com.aeryz.foodgoapps.utils.toCurrencyFormat
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 
 class DetailActivity : AppCompatActivity() {
 
@@ -30,7 +33,10 @@ class DetailActivity : AppCompatActivity() {
         val database = AppDatabase.getInstance(this)
         val cartDao = database.cartDao()
         val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
-        val repo: CartRepository = CartRepositoryImpl(cartDataSource)
+        val chuckerInterceptor = ChuckerInterceptor(this.applicationContext)
+        val service = FoodGoApiService.invoke(chuckerInterceptor)
+        val apiDataSource = FoodGoApiDataSource(service)
+        val repo: CartRepository = CartRepositoryImpl(cartDataSource, apiDataSource)
         GenericViewModelFactory.create(DetailViewModel(intent.extras, repo))
     }
 

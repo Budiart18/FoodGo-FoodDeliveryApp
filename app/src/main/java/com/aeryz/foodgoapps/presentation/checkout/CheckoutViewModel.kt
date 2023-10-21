@@ -5,22 +5,37 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.aeryz.foodgoapps.data.network.api.model.order.OrderRequest
 import com.aeryz.foodgoapps.data.repository.CartRepository
+import com.aeryz.foodgoapps.data.repository.UserRepository
 import com.aeryz.foodgoapps.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class CheckoutViewModel(private val cartRepository: CartRepository) : ViewModel() {
+class CheckoutViewModel(
+    private val cartRepository: CartRepository,
+    private val userRepository: UserRepository
+) : ViewModel() {
 
     val cartList = cartRepository.getUserCartData().asLiveData(Dispatchers.IO)
 
-    private val _deleteAllCartsResult = MutableLiveData<ResultWrapper<Boolean>>()
-    val deleteAllCartsResult: LiveData<ResultWrapper<Boolean>> get() = _deleteAllCartsResult
+    private val _checkoutResult = MutableLiveData<ResultWrapper<Boolean>>()
+    val checkoutResult : LiveData<ResultWrapper<Boolean>>
+        get() = _checkoutResult
 
     fun deleteAllCarts() {
-        viewModelScope.launch {
-            cartRepository.deleteAllCarts().collect {
-                _deleteAllCartsResult.postValue(it)
+        viewModelScope.launch(Dispatchers.IO) {
+            cartRepository.deleteAllCarts()
+        }
+    }
+
+    fun createOrder(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val carts = cartList.value?.payload?.first ?: return@launch
+            val total = cartList.value?.payload?.second?.toInt() ?: 0
+            val username = userRepository.getCurrentUser()?.fullName.orEmpty()
+            cartRepository.createOrder(carts, total, username).collect{
+                _checkoutResult.postValue(it)
             }
         }
     }
