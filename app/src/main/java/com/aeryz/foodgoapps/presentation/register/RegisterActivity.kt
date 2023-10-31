@@ -1,38 +1,23 @@
 package com.aeryz.foodgoapps.presentation.register
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
-import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.aeryz.foodgoapps.R
-import com.aeryz.foodgoapps.data.network.firebase.auth.FirebaseAuthDataSource
-import com.aeryz.foodgoapps.data.network.firebase.auth.FirebaseAuthDataSourceImpl
-import com.aeryz.foodgoapps.data.repository.UserRepository
-import com.aeryz.foodgoapps.data.repository.UserRepositoryImpl
 import com.aeryz.foodgoapps.databinding.ActivityRegisterBinding
 import com.aeryz.foodgoapps.presentation.login.LoginActivity
 import com.aeryz.foodgoapps.presentation.main.MainActivity
-import com.aeryz.foodgoapps.utils.GenericViewModelFactory
 import com.aeryz.foodgoapps.utils.highLightWord
 import com.aeryz.foodgoapps.utils.proceedWhen
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.auth.FirebaseAuth
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterActivity : AppCompatActivity() {
 
-    private fun createViewModel(): RegisterViewModel {
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val dataSource: FirebaseAuthDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val repository: UserRepository = UserRepositoryImpl(dataSource)
-        return RegisterViewModel(repository)
-    }
-
-    private val viewModel: RegisterViewModel by viewModels {
-        GenericViewModelFactory.create(createViewModel())
-    }
+    private val viewModel: RegisterViewModel by viewModel()
 
     private val binding: ActivityRegisterBinding by lazy {
         ActivityRegisterBinding.inflate(layoutInflater)
@@ -47,7 +32,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun observeResult() {
-        viewModel.registerResult.observe(this){
+        viewModel.registerResult.observe(this) {
             it.proceedWhen(
                 doOnSuccess = {
                     binding.pbLoading.isVisible = false
@@ -85,7 +70,7 @@ class RegisterActivity : AppCompatActivity() {
         binding.tvNavToLogin.highLightWord(getString(R.string.text_highlight_login_here)) {
             navigateToLogin()
         }
-        binding.btnRegister.setOnClickListener{
+        binding.btnRegister.setOnClickListener {
             doRegister()
         }
     }
@@ -111,11 +96,10 @@ class RegisterActivity : AppCompatActivity() {
         val email = binding.layoutForm.etEmail.text.toString().trim()
         val password = binding.layoutForm.etPassword.text.toString().trim()
         val confirmPassword = binding.layoutForm.etConfirmPassword.text.toString().trim()
-        return checkNameValidation(name) && checkEmailValidation(email)
-                && checkPasswordValidation(password, binding.layoutForm.tilPassword)
-                && checkPasswordValidation(confirmPassword, binding.layoutForm.tilPassword)
-                && checkPwdAndConfirmPwd(password, confirmPassword)
-
+        return checkNameValidation(name) && checkEmailValidation(email) &&
+            checkPasswordValidation(password, binding.layoutForm.tilPassword) &&
+            checkPasswordValidation(confirmPassword, binding.layoutForm.tilPassword) &&
+            checkPwdAndConfirmPwd(password, confirmPassword)
     }
 
     private fun checkNameValidation(name: String): Boolean {
@@ -172,5 +156,4 @@ class RegisterActivity : AppCompatActivity() {
             true
         }
     }
-
 }

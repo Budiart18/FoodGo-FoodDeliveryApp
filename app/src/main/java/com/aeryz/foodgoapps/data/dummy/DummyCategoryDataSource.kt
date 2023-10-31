@@ -3,7 +3,7 @@ package com.aeryz.foodgoapps.data.dummy
 import com.aeryz.foodgoapps.model.Category
 
 interface DummyCategoryDataSource {
-    fun getCategoriesData() : List<Category>
+    fun getCategoriesData(): List<Category>
 }
 
 class DummyCategoryDataSourceImpl : DummyCategoryDataSource {

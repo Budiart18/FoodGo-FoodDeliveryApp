@@ -24,26 +24,31 @@ class ProductListAdapter(
         const val GRID_LAYOUT = 2
     }
 
-    private val dataDiffer = AsyncListDiffer(this,object : DiffUtil.ItemCallback<Product>(){
-        override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
-            return oldItem.id == newItem.id
-        }
+    private val dataDiffer = AsyncListDiffer(
+        this,
+        object : DiffUtil.ItemCallback<Product>() {
+            override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
+                return oldItem.id == newItem.id
+            }
 
-        override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
+            override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
+                return oldItem.hashCode() == newItem.hashCode()
+            }
         }
-    })
+    )
 
-    fun submitData(data : List<Product>){
+    fun submitData(data: List<Product>) {
         dataDiffer.submitList(data)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return when(viewType){
+        return when (viewType) {
             LINEAR_LAYOUT -> {
                 LinearFoodItemViewHolder(
                     binding = ItemLinearFoodsBinding.inflate(
-                        LayoutInflater.from(parent.context), parent, false
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
                     ),
                     onItemClick = onItemClick
                 )
@@ -51,7 +56,9 @@ class ProductListAdapter(
             GRID_LAYOUT -> {
                 GridFoodItemViewHolder(
                     binding = ItemGridFoodsBinding.inflate(
-                        LayoutInflater.from(parent.context), parent, false
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
                     ),
                     onItemClick = onItemClick
                 )
@@ -74,8 +81,7 @@ class ProductListAdapter(
         return layoutMode
     }
 
-    fun refreshList(){
-        notifyItemRangeChanged(0,dataDiffer.currentList.size)
+    fun refreshList() {
+        notifyItemRangeChanged(0, dataDiffer.currentList.size)
     }
-
 }

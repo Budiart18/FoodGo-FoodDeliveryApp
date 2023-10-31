@@ -12,5 +12,4 @@ class SettingsViewModel(private val userPreferenceDataSource: UserPreferenceData
             userPreferenceDataSource.setUserDarkModePref(isUsingDarkMode)
         }
     }
-
 }

@@ -19,35 +19,34 @@ class HomeViewModel(
 ) : ViewModel() {
 
     private val _categories = MutableLiveData<ResultWrapper<List<Category>>>()
-    val categories : LiveData<ResultWrapper<List<Category>>>
+    val categories: LiveData<ResultWrapper<List<Category>>>
         get() = _categories
 
     private val _products = MutableLiveData<ResultWrapper<List<Product>>>()
-    val products : LiveData<ResultWrapper<List<Product>>>
+    val products: LiveData<ResultWrapper<List<Product>>>
         get() = _products
 
     val userLayoutMode = userPreferenceDataSource.getUserLayoutModePrefFlow().asLiveData(Dispatchers.IO)
 
-    fun getCategories(){
+    fun getCategories() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getCategories().collect{
+            repository.getCategories().collect {
                 _categories.postValue(it)
             }
         }
     }
 
-    fun getProducts(category: String? = null){
+    fun getProducts(category: String? = null) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getProducts(category).collect{
+            repository.getProducts(category).collect {
                 _products.postValue(it)
             }
         }
     }
 
-    fun setUserLayoutMode(layoutMode: Int){
+    fun setUserLayoutMode(layoutMode: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             userPreferenceDataSource.setUserLayoutModePref(layoutMode)
         }
     }
-
 }

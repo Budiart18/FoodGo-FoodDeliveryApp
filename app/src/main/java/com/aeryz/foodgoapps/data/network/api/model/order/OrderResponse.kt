@@ -3,7 +3,6 @@ package com.aeryz.foodgoapps.data.network.api.model.order
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
-
 @Keep
 data class OrderResponse(
     @SerializedName("code")

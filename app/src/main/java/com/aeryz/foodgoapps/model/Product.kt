@@ -12,5 +12,5 @@ data class Product(
     val productPrice: Double,
     val productFormattedPrice: String,
     val productImageUrl: String,
-    val productShopLocation: String,
+    val productShopLocation: String
 ) : Parcelable

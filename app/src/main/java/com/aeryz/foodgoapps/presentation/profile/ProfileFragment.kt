@@ -9,36 +9,23 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.aeryz.foodgoapps.R
-import com.aeryz.foodgoapps.data.network.firebase.auth.FirebaseAuthDataSourceImpl
-import com.aeryz.foodgoapps.data.repository.UserRepositoryImpl
 import com.aeryz.foodgoapps.databinding.FragmentProfileBinding
 import com.aeryz.foodgoapps.presentation.login.LoginActivity
-import com.aeryz.foodgoapps.utils.GenericViewModelFactory
 import com.aeryz.foodgoapps.utils.proceedWhen
-import com.google.firebase.auth.FirebaseAuth
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment() {
 
-    private lateinit var binding : FragmentProfileBinding
-    private fun createViewModel(): ProfileViewModel {
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val dataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val repo = UserRepositoryImpl(dataSource)
-        return ProfileViewModel(repo)
-    }
-    private val viewModel: ProfileViewModel by viewModels {
-        GenericViewModelFactory.create(createViewModel())
-    }
+    private lateinit var binding: FragmentProfileBinding
+
+    private val viewModel: ProfileViewModel by viewModel()
+
     private val pickMedia =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
@@ -46,7 +33,8 @@ class ProfileFragment : Fragment() {
             }
         }
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
@@ -62,7 +50,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun observeData() {
-        viewModel.changePhotoResult.observe(viewLifecycleOwner){
+        viewModel.changePhotoResult.observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = {
                     Toast.makeText(requireContext(), "Change Photo Profile Success !", Toast.LENGTH_SHORT).show()
@@ -74,7 +62,7 @@ class ProfileFragment : Fragment() {
                 }
             )
         }
-        viewModel.changeProfileResult.observe(viewLifecycleOwner){
+        viewModel.changeProfileResult.observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = {
                     binding.pbLoading.isVisible = false
@@ -94,10 +82,9 @@ class ProfileFragment : Fragment() {
         }
     }
 
-
     private fun setupForm() {
-        viewModel.isEditModeEnabled.observe(viewLifecycleOwner){isEditModeEnabled ->
-            if (isEditModeEnabled){
+        viewModel.isEditModeEnabled.observe(viewLifecycleOwner) { isEditModeEnabled ->
+            if (isEditModeEnabled) {
                 binding.ivEdit.load(R.drawable.ic_edit_active)
                 binding.ivEditPhoto.isEnabled = true
                 binding.layoutForm.tilName.isVisible = true
@@ -178,7 +165,6 @@ class ProfileFragment : Fragment() {
             .setPositiveButton(
                 "Okay"
             ) { dialog, id ->
-
             }.create()
         dialog.show()
     }
@@ -194,14 +180,12 @@ class ProfileFragment : Fragment() {
             .setNegativeButton(
                 "No"
             ) { dialog, id ->
-                //no-op , do nothing
+                // no-op , do nothing
             }.create()
         dialog.show()
     }
 
     private fun navigateToLogin() {
-        context?.startActivity(Intent(requireContext(),LoginActivity::class.java))
+        context?.startActivity(Intent(requireContext(), LoginActivity::class.java))
     }
-
-
 }

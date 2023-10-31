@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.aeryz.foodgoapps.data.network.api.model.order.OrderRequest
 import com.aeryz.foodgoapps.data.repository.CartRepository
 import com.aeryz.foodgoapps.data.repository.UserRepository
 import com.aeryz.foodgoapps.utils.ResultWrapper
@@ -20,7 +19,7 @@ class CheckoutViewModel(
     val cartList = cartRepository.getUserCartData().asLiveData(Dispatchers.IO)
 
     private val _checkoutResult = MutableLiveData<ResultWrapper<Boolean>>()
-    val checkoutResult : LiveData<ResultWrapper<Boolean>>
+    val checkoutResult: LiveData<ResultWrapper<Boolean>>
         get() = _checkoutResult
 
     fun deleteAllCarts() {
@@ -29,15 +28,14 @@ class CheckoutViewModel(
         }
     }
 
-    fun createOrder(){
+    fun createOrder() {
         viewModelScope.launch(Dispatchers.IO) {
             val carts = cartList.value?.payload?.first ?: return@launch
             val total = cartList.value?.payload?.second?.toInt() ?: 0
             val username = userRepository.getCurrentUser()?.fullName.orEmpty()
-            cartRepository.createOrder(carts, total, username).collect{
+            cartRepository.createOrder(carts, total, username).collect {
                 _checkoutResult.postValue(it)
             }
         }
     }
-
 }
