@@ -8,9 +8,6 @@
     <string name="text_top_categories_title">Top Categories</string>
     <string name="text_top_discount_title">Top Discount</string>
 
-    <string name="text_food_price_format" translatable="false">Rp. %.2f</string>
-    <string name="text_food_reviews_format">%.1f Reviews</string>
-    <string name="text_shop_distance_format" translatable="false">%.1f km</string>
     <string name="text_shop_location">Shop Location</string>
     <string name="text_add_to_cart">Add To Cart</string>
     <string name="text_food_total" translatable="false">1</string>
@@ -19,8 +16,6 @@
     <string name="text_checkout">Checkout</string>
     <string name="text_hint_notes">Please add extra sauce</string>
     <string name="total_quantity" translatable="false">x %s</string>
-    <string name="text_cart_empty">Cart is Empty</string>
-    <string name="text_title_order_confirmation">Order Confirmation</string>
     <string name="text_delivery_method">Delivery Method</string>
     <string name="text_pick_up">Pick Up</string>
     <string name="text_delivery">Delivery</string>
@@ -35,11 +30,6 @@
     <string name="text_order_success">Order Success !</string>
     <string name="text_back_to_home">Back to Home</string>
     <string name="text_title_profile">Profile</string>
-    <string name="text_username">Username</string>
-    <string name="text_password">Password</string>
-    <string name="text_email">Email</string>
-    <string name="text_phone_number">Phone Number</string>
-    <string name="text_submit">Submit</string>
     <string name="text_hint_name">Name</string>
     <string name="text_hint_email" translatable="false">Email</string>
     <string name="text_hint_password">Password</string>
@@ -60,5 +50,8 @@
     <string name="text_change_password">Change Password</string>
     <string name="text_logout_account">Logout Account</string>
     <string name="text_product_not_found">Product Not Found</string>
+    <string name="text_home">Home</string>
+    <string name="text_cart">Cart</string>
+    <string name="text_profile">Profile</string>
 
 </resources>

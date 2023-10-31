@@ -164,7 +164,7 @@ class ProfileFragment : Fragment() {
             .setMessage("Change password request sended to your email : ${viewModel.getCurrentUser()?.email} Please check to your inbox or spam")
             .setPositiveButton(
                 "Okay"
-            ) { dialog, id ->
+            ) { _, _ ->
             }.create()
         dialog.show()
     }
@@ -173,13 +173,13 @@ class ProfileFragment : Fragment() {
         val dialog = AlertDialog.Builder(requireContext()).setMessage("Do you want to logout ?")
             .setPositiveButton(
                 "Yes"
-            ) { dialog, id ->
+            ) { _, _ ->
                 viewModel.doLogout()
                 navigateToLogin()
             }
             .setNegativeButton(
                 "No"
-            ) { dialog, id ->
+            ) { _, _ ->
                 // no-op , do nothing
             }.create()
         dialog.show()

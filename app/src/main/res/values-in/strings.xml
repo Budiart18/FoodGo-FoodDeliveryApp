@@ -6,15 +6,12 @@
     <string name="text_button_banner">Pesan Sekarang!</string>
     <string name="text_top_categories_title">Kategori Teratas</string>
     <string name="text_top_discount_title">Diskon Teratas</string>
-    <string name="text_food_reviews_format">%.1f Ulasan</string>
     <string name="text_shop_location">Lokasi Toko</string>
     <string name="text_add_to_cart">Tambahkan ke Keranjang</string>
     <string name="text_title_your_cart">Keranjangmu</string>
     <string name="text_total_price">Jumlah Harga</string>
     <string name="text_checkout">Pembayaran</string>
     <string name="text_hint_notes">Tolong tambahkan saus</string>
-    <string name="text_cart_empty">Keranjang kosong</string>
-    <string name="text_title_order_confirmation">Konfirmasi Pesanan</string>
     <string name="text_delivery_method">Metode Pengiriman</string>
     <string name="text_pick_up">Ambil Sendiri</string>
     <string name="text_delivery">Dikirim</string>
@@ -29,11 +26,6 @@
     <string name="text_order_success">Pesanan Berhasil</string>
     <string name="text_back_to_home">Kembali ke Beranda</string>
     <string name="text_title_profile">Akun</string>
-    <string name="text_username">Nama Pengguna</string>
-    <string name="text_password">Kata Sandi</string>
-    <string name="text_email">Email</string>
-    <string name="text_phone_number">Nomor Telepon</string>
-    <string name="text_submit">Kumpulkan</string>
     <string name="text_hint_name">Nama</string>
     <string name="text_hint_password">Kata Sandi</string>
     <string name="text_hint_confirm_password">Konfirmasi Kata Sandi</string>
@@ -53,4 +45,7 @@
     <string name="text_change_password">Ubah Kata Sandi</string>
     <string name="text_logout_account">Keluar Akun</string>
     <string name="text_product_not_found">Produk tidak ditemukan</string>
+    <string name="text_home">Beranda</string>
+    <string name="text_cart">Keranjang</string>
+    <string name="text_profile">Profil</string>
 </resources>

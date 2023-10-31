@@ -17,7 +17,9 @@
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/text_hint_name" />
+            android:hint="@string/text_hint_name"
+            android:inputType="text"
+            android:autofillHints="name" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -33,7 +35,9 @@
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/text_hint_email" />
+            android:hint="@string/text_hint_email"
+            android:inputType="textEmailAddress"
+            android:autofillHints="emailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -51,7 +55,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/text_hint_password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:autofillHints="password" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -69,7 +74,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/text_hint_confirm_password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:autofillHints="password" />
 
     </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>
