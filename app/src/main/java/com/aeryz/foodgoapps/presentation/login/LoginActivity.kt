@@ -1,38 +1,28 @@
 package com.aeryz.foodgoapps.presentation.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
-import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.aeryz.foodgoapps.R
-import com.aeryz.foodgoapps.data.network.firebase.auth.FirebaseAuthDataSourceImpl
-import com.aeryz.foodgoapps.data.repository.UserRepositoryImpl
 import com.aeryz.foodgoapps.databinding.ActivityLoginBinding
 import com.aeryz.foodgoapps.presentation.main.MainActivity
 import com.aeryz.foodgoapps.presentation.register.RegisterActivity
-import com.aeryz.foodgoapps.utils.GenericViewModelFactory
 import com.aeryz.foodgoapps.utils.highLightWord
 import com.aeryz.foodgoapps.utils.proceedWhen
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.auth.FirebaseAuth
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
 
     private val binding: ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
-    private fun createViewModel(): LoginViewModel {
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val dataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val repository = UserRepositoryImpl(dataSource)
-        return LoginViewModel(repository)
-    }
-    private val viewModel: LoginViewModel by viewModels {
-        GenericViewModelFactory.create(createViewModel())
-    }
+
+    private val viewModel: LoginViewModel by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -42,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun observeResult() {
-        viewModel.loginResult.observe(this){
+        viewModel.loginResult.observe(this) {
             it.proceedWhen(
                 doOnSuccess = {
                     binding.pbLoading.isVisible = false
@@ -70,10 +60,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setClickListener() {
-        binding.btnLogin.setOnClickListener{
+        binding.btnLogin.setOnClickListener {
             doLogin()
         }
-        binding.tvNavToRegister.highLightWord(getString(R.string.text_highlight_register_here)){
+        binding.tvNavToRegister.highLightWord(getString(R.string.text_highlight_register_here)) {
             navigateToRegister()
         }
     }
@@ -92,11 +82,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkPasswordValidation(password: String, tilPassword: TextInputLayout): Boolean {
-        return if (password.isEmpty()){
+        return if (password.isEmpty()) {
             tilPassword.isErrorEnabled = true
             tilPassword.error = getString(R.string.text_error_password_empty)
             false
-        } else if (password.length < 8){
+        } else if (password.length < 8) {
             tilPassword.isErrorEnabled = true
             tilPassword.error = getString(R.string.text_error_password_less_than_8_char)
             false
@@ -107,7 +97,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkEmailValidation(email: String): Boolean {
-        return if (email.isEmpty()){
+        return if (email.isEmpty()) {
             binding.layoutForm.tilEmail.isErrorEnabled = true
             binding.layoutForm.etEmail.error = getString(R.string.text_error_email_empty)
             false

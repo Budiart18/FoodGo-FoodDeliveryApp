@@ -7,38 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.aeryz.foodgoapps.R
-import com.aeryz.foodgoapps.data.local.database.AppDatabase
-import com.aeryz.foodgoapps.data.local.database.datasource.CartDataSource
-import com.aeryz.foodgoapps.data.local.database.datasource.CartDatabaseDataSource
-import com.aeryz.foodgoapps.data.network.api.datasource.FoodGoApiDataSource
-import com.aeryz.foodgoapps.data.network.api.service.FoodGoApiService
-import com.aeryz.foodgoapps.data.repository.CartRepository
-import com.aeryz.foodgoapps.data.repository.CartRepositoryImpl
 import com.aeryz.foodgoapps.databinding.FragmentCartBinding
 import com.aeryz.foodgoapps.model.Cart
 import com.aeryz.foodgoapps.presentation.checkout.CheckoutActivity
-import com.aeryz.foodgoapps.utils.GenericViewModelFactory
 import com.aeryz.foodgoapps.utils.hideKeyboard
 import com.aeryz.foodgoapps.utils.proceedWhen
 import com.aeryz.foodgoapps.utils.toCurrencyFormat
-import com.chuckerteam.chucker.api.ChuckerInterceptor
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CartFragment : Fragment() {
 
     private lateinit var binding: FragmentCartBinding
 
-    private val viewModel: CartViewModel by viewModels {
-        val database = AppDatabase.getInstance(requireContext())
-        val cartDao = database.cartDao()
-        val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
-        val chuckerInterceptor = ChuckerInterceptor(requireContext().applicationContext)
-        val service = FoodGoApiService.invoke(chuckerInterceptor)
-        val apiDataSource = FoodGoApiDataSource(service)
-        val repo: CartRepository = CartRepositoryImpl(cartDataSource, apiDataSource)
-        GenericViewModelFactory.create(CartViewModel(repo))
-    }
+    private val viewModel: CartViewModel by viewModel()
 
     private val adapter: CartListAdapter by lazy {
         CartListAdapter(object : CartListener {
@@ -61,7 +43,8 @@ class CartFragment : Fragment() {
         })
     }
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCartBinding.inflate(inflater, container, false)
@@ -76,8 +59,8 @@ class CartFragment : Fragment() {
     }
 
     private fun observeData() {
-        viewModel.cartList.observe(viewLifecycleOwner){result ->
-            result.proceedWhen (
+        viewModel.cartList.observe(viewLifecycleOwner) { result ->
+            result.proceedWhen(
                 doOnSuccess = {
                     binding.rvCart.isVisible = true
                     result.payload?.let { (carts, totalPrice) ->
@@ -88,7 +71,7 @@ class CartFragment : Fragment() {
                     binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = false
                 },
-                doOnError = {err ->
+                doOnError = { err ->
                     binding.layoutState.root.isVisible = true
                     binding.layoutState.tvError.isVisible = true
                     binding.layoutState.tvError.text = err.exception?.message.orEmpty()
@@ -101,7 +84,7 @@ class CartFragment : Fragment() {
                     binding.layoutState.tvError.isVisible = false
                     binding.rvCart.isVisible = false
                 },
-                doOnEmpty = {data ->
+                doOnEmpty = { data ->
                     binding.layoutState.root.isVisible = true
                     binding.layoutState.tvError.isVisible = true
                     binding.layoutState.tvError.text = getString(R.string.text_cart_is_empty)
@@ -116,7 +99,7 @@ class CartFragment : Fragment() {
     }
 
     private fun setClickListener() {
-        binding.btnCheckout.setOnClickListener{
+        binding.btnCheckout.setOnClickListener {
             context?.startActivity(Intent(requireContext(), CheckoutActivity::class.java))
         }
     }
@@ -125,5 +108,4 @@ class CartFragment : Fragment() {
         binding.rvCart.itemAnimator = null
         binding.rvCart.adapter = adapter
     }
-
 }

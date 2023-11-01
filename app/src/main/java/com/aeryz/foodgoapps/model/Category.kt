@@ -6,7 +6,7 @@ import java.util.UUID
 
 @Parcelize
 data class Category(
-    val id: String = UUID.randomUUID().toString(),
+    val id: Int? = null,
     val categoryImage: String,
-    val categoryName: String,
+    val categoryName: String
 ) : Parcelable

@@ -5,16 +5,16 @@ import com.aeryz.foodgoapps.data.local.database.entity.CartEntity
 import kotlinx.coroutines.flow.Flow
 
 interface CartDataSource {
-    fun getAllCarts() : Flow<List<CartEntity>>
-    fun getCartById(cartId: Int) : Flow<CartEntity>
+    fun getAllCarts(): Flow<List<CartEntity>>
+    fun getCartById(cartId: Int): Flow<CartEntity>
     suspend fun insertCarts(carts: List<CartEntity>)
-    suspend fun insertCart(cart: CartEntity) : Long
-    suspend fun updateCart(cart: CartEntity) : Int
-    suspend fun deleteCart(cart: CartEntity) : Int
+    suspend fun insertCart(cart: CartEntity): Long
+    suspend fun updateCart(cart: CartEntity): Int
+    suspend fun deleteCart(cart: CartEntity): Int
     suspend fun deleteAllCarts()
 }
 
-class CartDatabaseDataSource(private val cartDao : CartDao) : CartDataSource {
+class CartDatabaseDataSource(private val cartDao: CartDao) : CartDataSource {
     override fun getAllCarts(): Flow<List<CartEntity>> {
         return cartDao.getAllCarts()
     }
@@ -27,7 +27,7 @@ class CartDatabaseDataSource(private val cartDao : CartDao) : CartDataSource {
         return cartDao.insertCarts(carts)
     }
 
-    override suspend fun insertCart(cart: CartEntity) : Long {
+    override suspend fun insertCart(cart: CartEntity): Long {
         return cartDao.insertCart(cart)
     }
 
@@ -42,5 +42,4 @@ class CartDatabaseDataSource(private val cartDao : CartDao) : CartDataSource {
     override suspend fun deleteAllCarts() {
         return cartDao.deleteAllCarts()
     }
-
 }

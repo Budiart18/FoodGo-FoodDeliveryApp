@@ -13,15 +13,14 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
 
     private val _loginResult = MutableLiveData<ResultWrapper<Boolean>>()
 
-    val loginResult : LiveData<ResultWrapper<Boolean>>
+    val loginResult: LiveData<ResultWrapper<Boolean>>
         get() = _loginResult
 
-    fun doLogin(email : String, password : String){
+    fun doLogin(email: String, password: String) {
         viewModelScope.launch {
-            repository.doLogin(email, password).collect{result ->
+            repository.doLogin(email, password).collect { result ->
                 _loginResult.postValue(result)
             }
         }
     }
-
 }

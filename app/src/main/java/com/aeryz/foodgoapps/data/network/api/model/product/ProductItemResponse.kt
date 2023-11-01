@@ -1,12 +1,13 @@
 package com.aeryz.foodgoapps.data.network.api.model.product
 
-
-import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 import com.aeryz.foodgoapps.model.Product
+import com.google.gson.annotations.SerializedName
 
 @Keep
 data class ProductItemResponse(
+    @SerializedName("id")
+    val id: Int?,
     @SerializedName("alamat_resto")
     val address: String?,
     @SerializedName("detail")
@@ -22,12 +23,13 @@ data class ProductItemResponse(
 )
 
 fun ProductItemResponse.toProduct() = Product(
+    id = this.id ?: 0,
     productName = this.name.orEmpty(),
     productDescription = this.detail.orEmpty(),
     productPrice = this.price ?: 0.0,
     productFormattedPrice = this.formattedPrice.orEmpty(),
     productImageUrl = this.imageUrl.orEmpty(),
-    productShopLocation = this.address.orEmpty(),
+    productShopLocation = this.address.orEmpty()
 )
 
 fun Collection<ProductItemResponse>.toProductList() = this.map { it.toProduct() }

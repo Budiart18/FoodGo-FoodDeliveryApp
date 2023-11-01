@@ -3,7 +3,7 @@ package com.aeryz.foodgoapps.data.dummy
 import com.aeryz.foodgoapps.model.Product
 
 interface DummyProductDataSource {
-    fun getProductList() : List<Product>
+    fun getProductList(): List<Product>
 }
 
 class DummyProductDataSourceImpl() : DummyProductDataSource {
@@ -56,7 +56,7 @@ class DummyProductDataSourceImpl() : DummyProductDataSource {
                 productImageUrl = "https://raw.githubusercontent.com/Budiart18/FoodGo-assets/main/product_image/img_product_noodles.webp",
                 productShopLocation = "Jl. Panjang Arteri Klp. Dua Raya No.12, RT.8/RW.2, Kb. Jeruk, Kec. Kb. Jeruk, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11530",
                 productFormattedPrice = ""
-            ),
+            )
 
         )
     }

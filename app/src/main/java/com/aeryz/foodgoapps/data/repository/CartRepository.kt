@@ -5,9 +5,7 @@ import com.aeryz.foodgoapps.data.local.database.entity.CartEntity
 import com.aeryz.foodgoapps.data.local.database.mapper.toCartEntity
 import com.aeryz.foodgoapps.data.local.database.mapper.toCartList
 import com.aeryz.foodgoapps.data.network.api.datasource.FoodGoDataSource
-import com.aeryz.foodgoapps.data.network.api.model.order.OrderItemRequest
 import com.aeryz.foodgoapps.data.network.api.model.order.OrderRequest
-import com.aeryz.foodgoapps.data.network.firebase.auth.FirebaseAuthDataSource
 import com.aeryz.foodgoapps.model.Cart
 import com.aeryz.foodgoapps.model.Product
 import com.aeryz.foodgoapps.model.toOrderItemRequestList
@@ -21,7 +19,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
 interface CartRepository {
-    fun getUserCartData() : Flow<ResultWrapper<Pair<List<Cart>, Double>>>
+    fun getUserCartData(): Flow<ResultWrapper<Pair<List<Cart>, Double>>>
     suspend fun createCart(product: Product, totalQuantity: Int, itemNotes: String): Flow<ResultWrapper<Boolean>>
     suspend fun increaseCart(item: Cart): Flow<ResultWrapper<Boolean>>
     suspend fun decreaseCart(item: Cart): Flow<ResultWrapper<Boolean>>
@@ -33,7 +31,7 @@ interface CartRepository {
 
 class CartRepositoryImpl(
     private val dataSource: CartDataSource,
-    private val apiDataSource: FoodGoDataSource,
+    private val apiDataSource: FoodGoDataSource
 ) : CartRepository {
 
     override fun getUserCartData(): Flow<ResultWrapper<Pair<List<Cart>, Double>>> {
@@ -49,7 +47,7 @@ class CartRepositoryImpl(
                     Pair(result, totalPrice)
                 }
             }.map {
-                if (it.payload?.first?.isEmpty() == true){
+                if (it.payload?.first?.isEmpty() == true) {
                     ResultWrapper.Empty(it.payload)
                 } else {
                     it
@@ -74,7 +72,8 @@ class CartRepositoryImpl(
                         itemNotes = itemNotes,
                         productName = product.productName,
                         productPrice = product.productPrice,
-                        productImgUrl = product.productImageUrl)
+                        productImgUrl = product.productImageUrl
+                    )
                 )
                 affectedRow > 0
             }
@@ -120,5 +119,4 @@ class CartRepositoryImpl(
             apiDataSource.createOrder(orderRequest).status == true
         }
     }
-
 }

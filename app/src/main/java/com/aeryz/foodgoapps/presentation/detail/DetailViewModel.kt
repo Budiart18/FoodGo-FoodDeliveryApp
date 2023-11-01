@@ -28,7 +28,7 @@ class DetailViewModel(
     val addToCartResult: LiveData<ResultWrapper<Boolean>>
         get() = _addToCartResult
 
-    fun addToCart(itemNotes : String){
+    fun addToCart(itemNotes: String) {
         viewModelScope.launch {
             val productQuantity =
                 if ((productCountLiveData.value ?: 0) <= 0) 1 else productCountLiveData.value ?: 0
@@ -40,18 +40,17 @@ class DetailViewModel(
         }
     }
 
-    fun add(){
+    fun add() {
         val count = (productCountLiveData.value ?: 0) + 1
         productCountLiveData.postValue(count)
         priceLiveData.postValue(product?.productPrice?.times(count) ?: 0.0)
     }
 
-    fun minus(){
+    fun minus() {
         if ((productCountLiveData.value ?: 0) > 1) {
             val count = (productCountLiveData.value ?: 0) - 1
             productCountLiveData.postValue(count)
             priceLiveData.postValue(product?.productPrice?.times(count) ?: 0.0)
         }
     }
-
 }

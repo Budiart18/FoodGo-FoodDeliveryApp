@@ -5,7 +5,7 @@ import com.aeryz.foodgoapps.model.Cart
 
 fun CartEntity?.toCart() = Cart(
     id = this?.id ?: 0,
-    productId = this?.productId.orEmpty(),
+    productId = this?.productId ?: 0,
     itemQuantity = this?.itemQuantity ?: 0,
     itemNotes = this?.itemNotes.orEmpty(),
     productPrice = this?.productPrice ?: 0.0,
@@ -15,7 +15,7 @@ fun CartEntity?.toCart() = Cart(
 
 fun Cart?.toCartEntity() = CartEntity(
     id = this?.id,
-    productId = this?.productId.orEmpty(),
+    productId = this?.productId ?: 0,
     itemQuantity = this?.itemQuantity ?: 0,
     itemNotes = this?.itemNotes.orEmpty(),
     productPrice = this?.productPrice ?: 0.0,

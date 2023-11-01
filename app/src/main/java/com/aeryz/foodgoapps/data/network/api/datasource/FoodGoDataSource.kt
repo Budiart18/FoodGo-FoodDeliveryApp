@@ -25,5 +25,4 @@ class FoodGoApiDataSource(private val service: FoodGoApiService) : FoodGoDataSou
     override suspend fun createOrder(orderRequest: OrderRequest): OrderResponse {
         return service.createOrder(orderRequest)
     }
-
 }

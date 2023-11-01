@@ -6,6 +6,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.google.firebase.crashlytics")
     id("com.google.gms.google-services")
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 android {
@@ -34,10 +35,10 @@ android {
     flavorDimensions += "env"
     productFlavors {
         create("production") {
-            buildConfigField("String","BASE_URl","\"https://1b8fa109-bcdb-4807-89b0-6fbe0d6086f6.mock.pstmn.io\"")
+            buildConfigField("String", "BASE_URl", "\"https://1b8fa109-bcdb-4807-89b0-6fbe0d6086f6.mock.pstmn.io\"")
         }
         create("integration") {
-            buildConfigField("String","BASE_URl","\"https://1b8fa109-bcdb-4807-89b0-6fbe0d6086f6.mock.pstmn.io\"")
+            buildConfigField("String", "BASE_URl", "\"https://1b8fa109-bcdb-4807-89b0-6fbe0d6086f6.mock.pstmn.io\"")
         }
     }
     compileOptions {
@@ -53,6 +54,22 @@ android {
     }
 }
 
+ktlint {
+    android.set(false)
+    ignoreFailures.set(true)
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+    }
+    kotlinScriptAdditionalPaths {
+        include(fileTree("scripts/"))
+    }
+    filter {
+        exclude("**/generated/**")
+        include("**/kotlin/**")
+    }
+}
+
 dependencies {
 
     implementation("androidx.core:core-ktx:1.9.0")
@@ -65,39 +82,41 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    //Navigation
+    // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.2")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.2")
-    //Coil imageloader
+    // Coil imageloader
     implementation("io.coil-kt:coil:2.4.0")
-    //RecyclerView
+    // RecyclerView
     implementation("androidx.recyclerview:recyclerview:1.3.1")
-    //fragment ktx
+    // fragment ktx
     implementation("androidx.fragment:fragment-ktx:1.6.1")
-    //coroutine
+    // coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
-    //ktx lifecycle
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-    //data store
+    // ktx lifecycle
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    // data store
     implementation("androidx.datastore:datastore-preferences:1.0.0")
-    //room database libraries
+    // room database libraries
     implementation("androidx.room:room-ktx:2.5.2")
     ksp("androidx.room:room-compiler:2.5.2")
-    //Lottie animation
-    implementation ("com.airbnb.android:lottie:6.1.0")
-    //firebase
+    // Lottie animation
+    implementation("com.airbnb.android:lottie:6.1.0")
+    // firebase
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-crashlytics-ktx")
     implementation("com.google.firebase:firebase-auth-ktx")
-    //retrofit & okhttp
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation ("com.squareup.okhttp3:okhttp:4.11.0")
-    //chucker
-    debugImplementation ("com.github.chuckerteam.chucker:library:4.0.0")
-    releaseImplementation ("com.github.chuckerteam.chucker:library-no-op:4.0.0")
+    // retrofit & okhttp
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    // chucker
+    debugImplementation("com.github.chuckerteam.chucker:library:4.0.0")
+    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:4.0.0")
+    // Koin for Android
+    implementation("io.insert-koin:koin-android:3.5.0")
 }

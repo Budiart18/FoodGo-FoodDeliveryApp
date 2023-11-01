@@ -41,5 +41,4 @@ interface FoodGoApiService {
             return retrofit.create(FoodGoApiService::class.java)
         }
     }
-
 }
