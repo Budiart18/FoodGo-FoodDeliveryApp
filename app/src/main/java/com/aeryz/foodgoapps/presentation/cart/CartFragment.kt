@@ -93,6 +93,7 @@ class CartFragment : Fragment() {
                     }
                     binding.layoutState.pbLoading.isVisible = false
                     binding.rvCart.isVisible = false
+                    binding.btnCheckout.isEnabled = false
                 }
             )
         }
