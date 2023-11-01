@@ -70,6 +70,7 @@ class CartFragment : Fragment() {
                     binding.layoutState.root.isVisible = false
                     binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = false
+                    binding.btnCheckout.isEnabled = true
                 },
                 doOnError = { err ->
                     binding.layoutState.root.isVisible = true
@@ -77,12 +78,14 @@ class CartFragment : Fragment() {
                     binding.layoutState.tvError.text = err.exception?.message.orEmpty()
                     binding.layoutState.pbLoading.isVisible = false
                     binding.rvCart.isVisible = false
+                    binding.btnCheckout.isEnabled = false
                 },
                 doOnLoading = {
                     binding.layoutState.root.isVisible = true
                     binding.layoutState.pbLoading.isVisible = true
                     binding.layoutState.tvError.isVisible = false
                     binding.rvCart.isVisible = false
+                    binding.btnCheckout.isEnabled = false
                 },
                 doOnEmpty = { data ->
                     binding.layoutState.root.isVisible = true
