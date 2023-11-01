@@ -9,7 +9,7 @@ import com.aeryz.foodgoapps.data.local.database.entity.CartEntity
 
 @Database(
     entities = [CartEntity::class],
-    version = 3,
+    version = 4,
     exportSchema = true
 )
 

@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName
 
 @Keep
 data class ProductItemResponse(
+    @SerializedName("id")
+    val id: Int?,
     @SerializedName("alamat_resto")
     val address: String?,
     @SerializedName("detail")
@@ -21,6 +23,7 @@ data class ProductItemResponse(
 )
 
 fun ProductItemResponse.toProduct() = Product(
+    id = this.id ?: 0,
     productName = this.name.orEmpty(),
     productDescription = this.detail.orEmpty(),
     productPrice = this.price ?: 0.0,

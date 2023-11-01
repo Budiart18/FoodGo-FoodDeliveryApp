@@ -54,7 +54,8 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setClickListener()
         getData()
-        observeData()
+        setUpProductRv()
+        observeCategoryData()
     }
 
     private fun getData() {
@@ -62,18 +63,19 @@ class HomeFragment : Fragment() {
         viewModel.getProducts()
     }
 
-    private fun observeData() {
+    private fun observeCategoryData() {
         viewModel.categories.observe(viewLifecycleOwner) {
-            it.proceedWhen(doOnSuccess = {
-                binding.layoutStateCategory.root.isVisible = false
-                binding.layoutStateCategory.pbLoading.isVisible = false
-                binding.layoutStateCategory.tvError.isVisible = false
-                binding.rvListCategories.apply {
-                    isVisible = true
-                    adapter = categoryAdapter
-                }
-                it.payload?.let { data -> categoryAdapter.submitData(data) }
-            }, doOnLoading = {
+            it.proceedWhen(
+                doOnSuccess = {
+                    binding.layoutStateCategory.root.isVisible = false
+                    binding.layoutStateCategory.pbLoading.isVisible = false
+                    binding.layoutStateCategory.tvError.isVisible = false
+                    binding.rvListCategories.apply {
+                        isVisible = true
+                        adapter = categoryAdapter
+                    }
+                    it.payload?.let { data -> categoryAdapter.submitData(data) }
+                }, doOnLoading = {
                     binding.layoutStateCategory.root.isVisible = true
                     binding.layoutStateCategory.pbLoading.isVisible = true
                     binding.layoutStateCategory.tvError.isVisible = false
@@ -84,16 +86,21 @@ class HomeFragment : Fragment() {
                     binding.layoutStateCategory.tvError.isVisible = true
                     binding.layoutStateCategory.tvError.text = it.exception?.message.orEmpty()
                     binding.rvListCategories.isVisible = false
-                })
+                }
+            )
         }
+    }
+
+    private fun observeProductData() {
         viewModel.products.observe(viewLifecycleOwner) {
-            it.proceedWhen(doOnSuccess = {
-                binding.layoutStateProduct.root.isVisible = false
-                binding.layoutStateProduct.pbLoading.isVisible = false
-                binding.layoutStateProduct.tvError.isVisible = false
-                setUpProductRv()
-                it.payload?.let { data -> productAdapter.submitData(data) }
-            }, doOnLoading = {
+            it.proceedWhen(
+                doOnSuccess = {
+                    binding.layoutStateProduct.root.isVisible = false
+                    binding.layoutStateProduct.pbLoading.isVisible = false
+                    binding.layoutStateProduct.tvError.isVisible = false
+                    binding.rvListFoods.isVisible = true
+                    it.payload?.let { data -> productAdapter.submitData(data) }
+                }, doOnLoading = {
                     binding.layoutStateProduct.root.isVisible = true
                     binding.layoutStateProduct.pbLoading.isVisible = true
                     binding.layoutStateProduct.tvError.isVisible = false
@@ -110,18 +117,19 @@ class HomeFragment : Fragment() {
                     binding.layoutStateProduct.tvError.isVisible = true
                     binding.layoutStateProduct.tvError.text = R.string.text_product_not_found.toString()
                     binding.rvListFoods.isVisible = false
-                })
+                }
+            )
         }
     }
 
     private fun setUpProductRv() {
         viewModel.userLayoutMode.observe(viewLifecycleOwner) { layoutMode ->
             binding.rvListFoods.apply {
-                isVisible = true
                 adapter = productAdapter
                 layoutManager = GridLayoutManager(requireContext(), layoutMode)
             }
             productAdapter.layoutMode = layoutMode
+            observeProductData()
         }
     }
 

@@ -6,7 +6,7 @@ import java.util.UUID
 
 @Parcelize
 data class Product(
-    val id: String = UUID.randomUUID().toString(),
+    val id: Int? = null,
     val productName: String,
     val productDescription: String,
     val productPrice: Double,
