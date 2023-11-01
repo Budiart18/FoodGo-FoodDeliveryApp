@@ -139,7 +139,7 @@
                     android:layout_marginTop="8dp"
                     android:padding="8dp"
                     android:hint="@string/text_hint_notes"
-                    android:background="@color/app_color_primary_container" />
+                    android:background="@drawable/bg_rounded_edittext" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

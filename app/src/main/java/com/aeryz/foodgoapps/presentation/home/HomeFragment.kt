@@ -75,12 +75,14 @@ class HomeFragment : Fragment() {
                         adapter = categoryAdapter
                     }
                     it.payload?.let { data -> categoryAdapter.submitData(data) }
-                }, doOnLoading = {
+                },
+                doOnLoading = {
                     binding.layoutStateCategory.root.isVisible = true
                     binding.layoutStateCategory.pbLoading.isVisible = true
                     binding.layoutStateCategory.tvError.isVisible = false
                     binding.rvListCategories.isVisible = false
-                }, doOnError = {
+                },
+                doOnError = {
                     binding.layoutStateCategory.root.isVisible = true
                     binding.layoutStateCategory.pbLoading.isVisible = false
                     binding.layoutStateCategory.tvError.isVisible = true
@@ -95,23 +97,26 @@ class HomeFragment : Fragment() {
         viewModel.products.observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = {
+                    it.payload?.let { data -> productAdapter.submitData(data) }
                     binding.layoutStateProduct.root.isVisible = false
                     binding.layoutStateProduct.pbLoading.isVisible = false
-                    binding.layoutStateProduct.tvError.isVisible = false
                     binding.rvListFoods.isVisible = true
-                    it.payload?.let { data -> productAdapter.submitData(data) }
-                }, doOnLoading = {
+                    binding.layoutStateProduct.tvError.isVisible = false
+                },
+                doOnLoading = {
                     binding.layoutStateProduct.root.isVisible = true
                     binding.layoutStateProduct.pbLoading.isVisible = true
                     binding.layoutStateProduct.tvError.isVisible = false
                     binding.rvListFoods.isVisible = false
-                }, doOnError = {
+                },
+                doOnError = {
                     binding.layoutStateProduct.root.isVisible = true
                     binding.layoutStateProduct.pbLoading.isVisible = false
                     binding.layoutStateProduct.tvError.isVisible = true
                     binding.layoutStateProduct.tvError.text = it.exception?.message.orEmpty()
                     binding.rvListFoods.isVisible = false
-                }, doOnEmpty = {
+                },
+                doOnEmpty = {
                     binding.layoutStateProduct.root.isVisible = true
                     binding.layoutStateProduct.pbLoading.isVisible = false
                     binding.layoutStateProduct.tvError.isVisible = true
