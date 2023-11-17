@@ -14,6 +14,7 @@ import com.aeryz.foodgoapps.utils.proceed
 import com.aeryz.foodgoapps.utils.proceedFlow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
@@ -52,6 +53,8 @@ class CartRepositoryImpl(
                 } else {
                     it
                 }
+            }.catch {
+                emit(ResultWrapper.Error(exception = Exception(it)))
             }.onStart {
                 emit(ResultWrapper.Loading())
                 delay(2000)
